@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
-import { Text } from "@codevallyorg/react-components";
 
+import Input from "../../../components/input/Input";
 import { yupValidator } from "../../../utils/general";
 import AuthLayout from "../../../components/layout/Auth";
 import * as authActions from "../../../store/auth/actions";
@@ -32,7 +32,7 @@ function Signup(props) {
                   <div className="form-group">
                     <Field name="email" type="email">
                       {({ input, meta }) => (
-                        <Text
+                        <Input
                           {...input}
                           type="email"
                           placeholder="Email"
@@ -46,7 +46,7 @@ function Signup(props) {
                   <div className="form-group">
                     <Field name="fullName" type="text">
                       {({ input, meta }) => (
-                        <Text
+                        <Input
                           {...input}
                           type="text"
                           placeholder="Full name"
@@ -60,7 +60,7 @@ function Signup(props) {
                   <div className="form-group">
                     <Field name="userName" type="text">
                       {({ input, meta }) => (
-                        <Text
+                        <Input
                           {...input}
                           type="text"
                           placeholder="Username"
@@ -74,7 +74,7 @@ function Signup(props) {
                   <div className="form-group">
                     <Field name="password" type="password">
                       {({ input, meta }) => (
-                        <Text
+                        <Input
                           {...input}
                           type="password"
                           placeholder="Password"

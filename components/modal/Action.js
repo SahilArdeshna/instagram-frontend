@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import { Modal, Container, Row } from "react-bootstrap";
 
-import config from "../../config";
 import { notify } from "../../utils/toster";
 import { copyToClipboard } from "../../utils/general";
 import * as userActions from "../../store/user/actions";
@@ -27,7 +26,7 @@ function ActionModal(props) {
   const copyLink = (e) => {
     e.preventDefault();
 
-    const postUrl = `${config.DOMAIN_URL}/post/${postId}`;
+    const postUrl = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/post/${postId}`;
 
     // Clipboard funtion
     copyToClipboard(postUrl);

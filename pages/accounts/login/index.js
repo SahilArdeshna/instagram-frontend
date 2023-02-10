@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
-import { Login as LoginForm } from "@codevallyorg/react-components";
 
 import Loading from "../../../components/loading";
+import LoginForm from "../../../components/login/Login";
 import AuthLayout from "../../../components/layout/Auth";
 import * as authActions from "../../../store/auth/actions";
 import { loginSchema } from "../../../schema/login/schema";

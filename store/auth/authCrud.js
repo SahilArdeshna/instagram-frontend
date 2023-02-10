@@ -1,10 +1,8 @@
 import axios from "../../utils/axios";
 
-import config from "../../config";
-
 // Api
-const LOGIN_URL = `${config.BACKEND_API}/auth/login`;
-const SIGNUP_URL = `${config.BACKEND_API}/auth/signup`;
+const LOGIN_URL = `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/login`;
+const SIGNUP_URL = `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/signup`;
 
 // Login function
 export const login = async (loginData) => {

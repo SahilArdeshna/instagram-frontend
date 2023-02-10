@@ -1,5 +1,3 @@
-import config from "../config";
-
 export const capitalizeFirstLetter = (letter) => {
   return letter.replace(/(^\w{1})/g, (match) => match.toUpperCase());
 };
@@ -18,7 +16,7 @@ export const yupValidator = async (values, schema) => {
 };
 
 export const storeToken = (token) => {
-  window.localStorage.setItem(config.TOKEN_KEY, token);
+  window.localStorage.setItem(process.env.NEXT_PUBLIC_TOKEN_KEY, token);
 };
 
 export const getToken = (key) => {
@@ -42,4 +40,8 @@ export const copyToClipboard = (data) => {
   document.execCommand("copy");
 
   document.body.removeChild(textarea);
+};
+
+export const mergeClassNames = (defaultClasses, extraClasses) => {
+  return [defaultClasses, extraClasses || ""].join(" ").trim();
 };

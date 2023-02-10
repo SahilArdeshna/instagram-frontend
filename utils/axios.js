@@ -1,5 +1,4 @@
 import axios from "axios";
-import configData from "../config";
 import { getToken } from "./general";
 
 // Add a request interceptor

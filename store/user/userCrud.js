@@ -1,9 +1,7 @@
 import axios from "../../utils/axios";
 
-import config from "../../config";
-
 // Api
-const USER_URL = `${config.BACKEND_API}/users`;
+const USER_URL = `${process.env.NEXT_PUBLIC_BACKEND_API}/users`;
 
 // User follow function
 export const follow = async (followId) => {

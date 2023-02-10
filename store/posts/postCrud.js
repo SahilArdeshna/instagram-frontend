@@ -1,9 +1,7 @@
 import axios from "../../utils/axios";
 
-import config from "../../config";
-
 // Api
-const POST_URL = `${config.BACKEND_API}/posts`;
+const POST_URL = `${process.env.NEXT_PUBLIC_BACKEND_API}/posts`;
 
 // Get posts function
 export const getPosts = async () => {

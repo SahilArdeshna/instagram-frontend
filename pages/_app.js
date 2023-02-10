@@ -9,7 +9,6 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.scss";
-import "@codevallyorg/react-components/dist";
 
 function MyApp({ Component, pageProps }) {
   return (

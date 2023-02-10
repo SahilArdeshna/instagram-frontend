@@ -1,7 +1,7 @@
-import * as actionTypes from "../actions/actionTypes";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import config from "../../../config";
+
+import * as actionTypes from "../actions/actionTypes";
 import { removeStorage, storeToken } from "../../../utils/general";
 
 // Initial state
@@ -16,7 +16,7 @@ const initialState = {
 
 // Reducer function
 export const authReducer = persistReducer(
-  { storage, key: config.PERSIST_KEY },
+  { storage, key: process.env.NEXT_PUBLIC_PERSIST_KEY },
   (state = initialState, action) => {
     switch (action.type) {
       case actionTypes.AUTH_START:
@@ -50,7 +50,7 @@ export const authReducer = persistReducer(
       }
       case actionTypes.AUTH_LOGOUT: {
         // Remove token from storage
-        removeStorage(config.TOKEN_KEY);
+        removeStorage(process.env.NEXT_PUBLIC_TOKEN_KEY);
 
         return {
           ...initialState,

@@ -6,7 +6,6 @@ import { createStore, applyMiddleware } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import config from "../config";
 import { watchUser } from "./user/saga";
 import { watchAuth } from "./auth/saga";
 import { watchPost } from "./posts/saga";
@@ -17,7 +16,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 // Persist config
 const persistConfig = {
-  key: config.PERSIST_KEY,
+  key: process.env.NEXT_PUBLIC_PERSIST_KEY,
   storage,
 };
 

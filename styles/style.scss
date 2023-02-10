@@ -1,0 +1,168 @@
+/* Global variables */
+$gray: grey !default;
+
+$primary: #007bff !default;
+$secondary: $gray !default;
+
+$border-color: $gray !default;
+$box-shadow: 0 0.5rem 1rem rgba(black, 0.15) !default;
+
+$input-border-color: $gray !default;
+$input-focus-border-color: #80bdff !default;
+
+$input-btn-padding-y: .375rem !default;
+$input-btn-padding-x: .75rem !default;
+$input-btn-focus-width: 0.2rem !default;
+$input-btn-focus-color: rgba($primary, 0.25) !default;
+$input-btn-focus-box-shadow: 0 0 0 $input-btn-focus-width $input-btn-focus-color !default;
+$input-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !default;
+$input-color:#495057 !default;
+$input-height: 38px !default;
+$input-border-radius: 0.25rem !default;
+$input-font-family: null !default;
+$input-font-size: 1rem;
+$input-line-height: 1.5 !default;
+
+/* Functions */
+@function hexToRGB($hexColor) {
+  @return red($hexColor), green($hexColor), blue($hexColor);
+}
+
+/* Mixins */
+@mixin input {
+  width: 100%;
+  height: $input-height;
+  padding: $input-btn-padding-y $input-btn-padding-x;
+  border: 1px solid var(--co-border);
+  border-radius: $input-border-radius;
+  color: $input-color;
+  transition: $input-transition;
+  line-height: $input-line-height;
+}
+
+@mixin input-focus {
+  border-color: var(--co-border-focus);
+  box-shadow: 0 0 0 var(--co-shadow-width) var(--co-shadow);
+  outline: 0;
+}
+
+/* Define css variables */
+:root {
+  --co-primary: #{hexToRGB($primary)};
+  --co-secondary: #{hexToRGB($secondary)};
+  --co-border: #{$input-border-color};
+  --co-border-focus: #{$input-focus-border-color};
+  --co-shadow: #{$input-btn-focus-color};
+  --co-shadow-width: #{$input-btn-focus-width};
+  --co-input-transition: #{$input-transition};
+}
+
+/* General */
+.co-icon {
+  cursor: pointer;
+}
+.invalid-feedback {
+  display: block;
+}
+
+/* Login */
+.co-login {
+  .submit {
+    display: flex;
+    margin-top: 1.5rem;
+    button {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+/* React select */
+.co-react-select-container {
+  .co-react-select {
+    .__control {
+      border: 1px solid var(--co-border);
+      transition: var(--co-input-transition);
+      box-shadow: none;
+    }
+    .__control:hover,
+    .__control--is-focused {
+      border: 1px solid var(--co-border-focus);
+      box-shadow: 0 0 0 var(--co-shadow-width) var(--co-shadow);
+    }
+    .__multi-value {
+      background-color: rgba(var(--co-secondary), 0.2);
+    }
+    .__option--is-selected {
+      background-color: rgba(var(--co-primary), 1) !important;
+      color: white !important;
+    }
+    .__option--is-focused {
+      background-color: rgba(var(--co-primary), 0.6);
+      color: white;
+    }
+  }
+}
+
+/* React date picker */
+.react-datepicker-wrapper {
+  .react-datepicker__input-container {
+    input {
+      @include input
+    }
+    input:focus {
+      @include input-focus
+    }
+  }
+}
+
+.react-datepicker__tab-loop {
+  .react-datepicker {
+    font-family: var(--font-family-sans-serif);
+    color: $input-color;
+
+    .react-datepicker__triangle {
+      left: 50px !important;
+    }
+
+    .react-datepicker__current-month, 
+    .react-datepicker-time__header, 
+    .react-datepicker-year-header {
+      color: $input-color;
+    }
+
+    .react-datepicker__day-name, 
+    .react-datepicker__day, 
+    .react-datepicker__time-name {
+      color: $input-color;
+    }
+
+    .react-datepicker__day--keyboard-selected, 
+    .react-datepicker__month-text--keyboard-selected, 
+    .react-datepicker__quarter-text--keyboard-selected, 
+    .react-datepicker__year-text--keyboard-selected,
+    .react-datepicker__day--selected {
+      border-radius: $input-border-radius;
+      background-color: rgba(var(--co-primary), 1);
+      color: white;
+    }
+
+    .react-datepicker__day:hover, 
+    .react-datepicker__month-text:hover, 
+    .react-datepicker__quarter-text:hover, 
+    .react-datepicker__year-text:hover {
+      border-radius: $input-border-radius;
+    }
+
+    .react-datepicker__input-time-container {
+      .react-datepicker-time__input {
+        input {
+          @include input
+        }
+        input:focus {
+          @include input-focus
+        }
+      }
+    }
+  }
+}

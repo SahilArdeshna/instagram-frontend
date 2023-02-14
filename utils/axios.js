@@ -7,7 +7,7 @@ axios.interceptors.request.use(
     // Do something before request is sent
 
     if (!config.headers.Authorization) {
-      const authToken = getToken(configData.TOKEN_KEY);
+      const authToken = getToken(process.env.NEXT_PUBLIC_TOKEN_KEY);
       config.headers.Authorization = `Bearer ${authToken}`;
       return config;
     }

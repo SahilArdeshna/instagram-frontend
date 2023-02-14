@@ -22,12 +22,15 @@ export function* loginSaga(action) {
     yield put(actions.loginSuccess(result.data));
 
     // Toster notification
-    notify("success", "Successfully loged in.");
+    // notify("success", "Successfully loged in.");
 
     // Call fetch success to set loading false
     yield put(actions.authSuccess());
   } catch (err) {
     console.log(err);
+    let errMsg =
+      err?.response?.data?.message ||
+      "Something went wrong! Please try again later.";
 
     if (Array.isArray(err?.response?.data?.message)) {
       err.response.data.message.forEach((err) => {
@@ -36,11 +39,11 @@ export function* loginSaga(action) {
       });
     } else {
       // Toster notification
-      notify("error", err.message);
+      notify("error", errMsg);
     }
 
     // Call fetch faild to store error message in state
-    yield put(actions.authFaild(err.message));
+    yield put(actions.authFaild(errMsg));
   }
 }
 
@@ -65,6 +68,9 @@ export function* signupSaga(action) {
     yield put(actions.authSuccess());
   } catch (err) {
     console.log(err);
+    let errMsg =
+      err?.response?.data?.message ||
+      "Something went wrong! Please try again later.";
 
     if (Array.isArray(err?.response?.data?.message)) {
       err.response.data.message.forEach((err) => {
@@ -73,10 +79,10 @@ export function* signupSaga(action) {
       });
     } else {
       // Toster notification
-      notify("error", err.message);
+      notify("error", errMsg);
     }
 
     // Call fetch faild to store error message in state
-    yield put(actions.authFaild(err.message));
+    yield put(actions.authFaild(errMsg));
   }
 }

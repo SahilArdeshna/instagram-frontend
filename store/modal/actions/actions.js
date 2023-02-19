@@ -60,3 +60,29 @@ export const closeUnfollowModal = () => {
     type: actionTypes.MODAL_UNFOLLOW_CLOSE,
   };
 };
+
+export const openCreateModal = () => {
+  return {
+    type: actionTypes.MODAL_CREATE_OPEN,
+  };
+};
+
+export const closeCreateModal = () => {
+  return {
+    type: actionTypes.MODAL_CREATE_CLOSE,
+  };
+};
+
+export const updateDiscard = (discard) => {
+  return {
+    type: actionTypes.MODAL_CREATE_UPDATE_DISCARD,
+    discard,
+  };
+};
+
+export const updateFile = (file) => {
+  return {
+    type: actionTypes.MODAL_CREATE_UPDATE_FILE,
+    file,
+  };
+};

@@ -4,8 +4,6 @@ import { Modal, Container, Row } from "react-bootstrap";
 
 import { notify } from "../../utils/toster";
 import { copyToClipboard } from "../../utils/general";
-import * as userActions from "../../store/user/actions";
-import * as postsActions from "../../store/posts/actions";
 import * as modalActions from "../../store/modal/actions";
 
 function ActionModal(props) {

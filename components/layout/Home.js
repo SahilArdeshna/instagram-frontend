@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import Footer from "../footer";
 import Navbar from "../navbar/Navbar";
 import ActionModal from "../modal/Action";
+import PostUpload from "../modal/PostUpload";
 import DeleteAndUnfollow from "../modal/DeleteAndUnfollow";
 
 function HomeLayout(props) {
@@ -63,6 +64,9 @@ function HomeLayout(props) {
 
       {/* delete and unfollow modal */}
       <DeleteAndUnfollow />
+
+      {/* post upload modal */}
+      <PostUpload />
     </section>
   );
 }

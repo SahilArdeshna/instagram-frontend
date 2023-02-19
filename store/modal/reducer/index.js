@@ -19,6 +19,11 @@ const initialState = {
   settingModal: {
     show: false,
   },
+  createModal: {
+    show: false,
+    discard: false,
+    file: "",
+  },
 };
 
 // Reducer function
@@ -38,10 +43,7 @@ export const modalReducer = (state = initialState, action) => {
       return {
         ...state,
         actionModal: {
-          show: false,
-          postId: null,
-          author: null,
-          isFollowing: false,
+          ...initialState.actionModal,
         },
       };
     case actionTypes.MODAL_SETTING_OPEN:
@@ -55,7 +57,7 @@ export const modalReducer = (state = initialState, action) => {
       return {
         ...state,
         settingModal: {
-          show: false,
+          ...initialState.settingModal,
         },
       };
     case actionTypes.MODAL_DELETE_OPEN:
@@ -70,8 +72,7 @@ export const modalReducer = (state = initialState, action) => {
       return {
         ...state,
         deleteModal: {
-          show: false,
-          postId: null,
+          ...initialState.deleteModal,
         },
       };
     case actionTypes.MODAL_UNFOLLOW_OPEN:
@@ -86,8 +87,38 @@ export const modalReducer = (state = initialState, action) => {
       return {
         ...state,
         unfollowModal: {
-          show: false,
-          author: null,
+          ...initialState.unfollowModal,
+        },
+      };
+    case actionTypes.MODAL_CREATE_OPEN:
+      return {
+        ...state,
+        createModal: {
+          ...state.createModal,
+          show: true,
+        },
+      };
+    case actionTypes.MODAL_CREATE_CLOSE:
+      return {
+        ...state,
+        createModal: {
+          ...initialState.createModal,
+        },
+      };
+    case actionTypes.MODAL_CREATE_UPDATE_DISCARD:
+      return {
+        ...state,
+        createModal: {
+          ...state.createModal,
+          discard: action.discard,
+        },
+      };
+    case actionTypes.MODAL_CREATE_UPDATE_FILE:
+      return {
+        ...state,
+        createModal: {
+          ...state.createModal,
+          file: action.file,
         },
       };
     default:

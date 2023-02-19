@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { useRouter } from "next/router";
 import { Modal, Container, Row } from "react-bootstrap";
 
 import * as userActions from "../../store/user/actions";

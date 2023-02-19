@@ -1,7 +1,7 @@
 import { takeEvery, all } from "redux-saga/effects";
 
-import * as actionTypes from "../actions/actionTypes";
 import { loginSaga, signupSaga } from "./saga";
+import * as actionTypes from "../actions/actionTypes";
 
 // Watch auth function generator
 export function* watchAuth() {

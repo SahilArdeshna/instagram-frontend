@@ -54,7 +54,9 @@ function PostUpload(props) {
                     username={user.userName}
                     profileImage={user.profileImage}
                   />
-                  <div></div>
+                  <div>
+                    <textarea placeholder="Write a caption..." />
+                  </div>
                 </div>
               </div>
             ) : (

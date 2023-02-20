@@ -8,6 +8,7 @@
   --border-color: #dbdbdb;
   --color-efefef: #efefef;
   --image-background-color: #efefef;
+  --primary-text: #262626;
 }
 
 html,
@@ -1716,6 +1717,7 @@ hr {
   .post-modal-content-upload {
     display: flex;
     flex-direction: row;
+    min-width: 688px;
 
     .preview-image {
       width: 409px;
@@ -1734,17 +1736,38 @@ hr {
     .post-info {
       display: flex;
       flex-direction: column;
+      max-width: 324px;
+      width: 100%;
 
+      textarea {
+        padding: 0 16px;
+        line-height: 24px;
+        min-height: 168px;
+        overflow-y: auto;
+        color: var(--primary-text);
+        border: none;
+        background-color: transparent;
+        font-size: 16px;
+        resize: none;
+        height: 24px;
+      }
+
+      textarea:focus {
+        outline: none;
+      }
     }
   }
 }
 
 .post-header {
-  border-bottom: 1px solid var(--color-efefef);
+  // border-bottom: 1px solid var(--color-efefef);
   align-items: center;
   flex-direction: row;
   height: 60px;
   padding: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
   .profile-image-div {
     position: relative;
@@ -1779,16 +1802,17 @@ hr {
   }
 
   .username-div {
-    margin-left: 14px;
+    // margin-left: 14px;
     align-items: flex-start;
     display: flex;
     flex-grow: 1;
     flex-shrink: 1;
-    margin-left: 12px;
+    margin-left: 6px;
     overflow: hidden;
 
     .username {
       max-width: 220px;
+      color: var(--primary-text);
 
       .name {
         align-items: center;

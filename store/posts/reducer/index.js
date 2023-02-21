@@ -6,6 +6,7 @@ const initialState = {
   post: null,
   error: null,
   loading: false,
+  isUploading: false,
 };
 
 // Reducer function
@@ -38,6 +39,11 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         post: action.post,
+      };
+    case actionTypes.POST_CREATE_STAT_UPDATE:
+      return {
+        ...state,
+        isUploading: action.isUploading,
       };
     case actionTypes.POSTS_INIT:
       return {

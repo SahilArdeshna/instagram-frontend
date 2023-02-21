@@ -10,3 +10,6 @@ export const POST_FETCH = "POST_FETCH";
 export const POST_FETCHED = "POST_FETCHED";
 
 export const POST_DELETE = "POST_DELETE";
+
+export const POST_CREATE = "POST_CREATE";
+export const POST_CREATE_STAT_UPDATE = "POST_CREATE_STAT_UPDATE";

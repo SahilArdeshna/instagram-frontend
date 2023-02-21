@@ -80,9 +80,9 @@ export const updateDiscard = (discard) => {
   };
 };
 
-export const updateFile = (file) => {
+export const updateFiles = (files) => {
   return {
     type: actionTypes.MODAL_CREATE_UPDATE_FILE,
-    file,
+    files,
   };
 };

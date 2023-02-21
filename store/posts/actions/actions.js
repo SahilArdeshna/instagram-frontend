@@ -67,3 +67,19 @@ export const postsInit = () => {
     type: actionTypes.POSTS_INIT,
   };
 };
+
+// Create post
+export const createPost = (data) => {
+  return {
+    type: actionTypes.POST_CREATE,
+    data,
+  };
+};
+
+// Update create state
+export const updateCreatePostLoading = (data) => {
+  return {
+    type: actionTypes.POST_CREATE_STAT_UPDATE,
+    isUploading: data,
+  };
+};

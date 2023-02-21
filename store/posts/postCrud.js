@@ -3,6 +3,11 @@ import axios from "../../utils/axios";
 // Api
 const POST_URL = `${process.env.NEXT_PUBLIC_BACKEND_API}/posts`;
 
+// Create post function
+export const createPost = async (payload) => {
+  return await axios.post(POST_URL, payload);
+};
+
 // Get posts function
 export const getPosts = async () => {
   return await axios.get(POST_URL);

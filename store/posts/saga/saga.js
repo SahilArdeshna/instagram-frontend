@@ -2,7 +2,38 @@ import { put } from "redux-saga/effects";
 
 import * as actions from "../actions";
 import { notify } from "../../../utils/toster";
-import { getSinglePost, getPosts, deletePost } from "../postCrud";
+import * as actionTypes from "../actions/actionTypes";
+import { getSinglePost, getPosts, deletePost, createPost } from "../postCrud";
+
+// Create post function
+export function* createPostSaga(action) {
+  try {
+    // Call fetch start to displaying loading spinner
+    yield put(actions.updateCreatePostLoading(true));
+
+    // Call login axios function
+    const result = yield createPost(action.data);
+
+    // If response error found throw error
+    if (result.data && result.data.statusCode === 400) {
+      throw new Error(result.data.message);
+    }
+
+    // Store post data into store
+    yield put(actions.postsFetched(result.data));
+
+    // Call fetch success to set loading false
+    yield put(actions.updateCreatePostLoading(false));
+  } catch (err) {
+    console.log(err);
+
+    // Toster notification
+    notify("error", err.response.data.message);
+
+    // Call fetch faild to store error message in state
+    yield put(actions.updateCreatePostLoading(false));
+  }
+}
 
 // Get Posts function
 export function* getPostsSaga(action) {

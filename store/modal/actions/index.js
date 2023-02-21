@@ -1,5 +1,5 @@
 export {
-  updateFile,
+  updateFiles,
   updateDiscard,
   openActionModal,
   openDeleteModal,

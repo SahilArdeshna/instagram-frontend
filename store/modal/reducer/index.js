@@ -20,9 +20,9 @@ const initialState = {
     show: false,
   },
   createModal: {
+    files: [],
     show: false,
     discard: false,
-    file: "",
   },
 };
 
@@ -118,7 +118,7 @@ export const modalReducer = (state = initialState, action) => {
         ...state,
         createModal: {
           ...state.createModal,
-          file: action.file,
+          files: action.files,
         },
       };
     default:

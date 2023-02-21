@@ -1,17 +1,29 @@
-import { useRef } from "react";
+import { isEmpty } from "lodash";
 import { connect } from "react-redux";
-import { Modal, Container, Row } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { useRef, useState } from "react";
+import { Modal, Container } from "react-bootstrap";
+import { Carousel } from "react-responsive-carousel";
 
 import File from "../../icons/File";
 import BackArrow from "../../icons/BackArrow";
 import UserInfoShort from "../../widgets/UserInfoShort";
+import * as postActions from "../../store/posts/actions";
 import * as modalActions from "../../store/modal/actions";
 
 function PostUpload(props) {
   const inputRef = useRef(null);
-  const { file, user, closeModal, updateFile, showCreateModal } = props;
+  const {
+    files,
+    user,
+    isUploading,
+    closeModal,
+    createPost,
+    updateFiles,
+    showCreateModal,
+  } = props;
 
-  console.log("file", file);
+  const [caption, setCaption] = useState("");
 
   const onButtonClick = () => {
     if (!inputRef.current) return;
@@ -20,15 +32,30 @@ function PostUpload(props) {
   };
 
   const inputChangeHandler = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (isEmpty(files)) return;
 
-    const fileUrl = URL.createObjectURL(file);
-    updateFile(fileUrl);
+    // File size limitation
+
+    updateFiles(files);
     inputRef.current.value = "";
   };
 
   const backClickHandler = () => {};
+
+  const captionChangeHandler = (e) => setCaption(e.target.value);
+
+  const shareClickHandler = () => {
+    if (!files) {
+      toast.error("Please upload images or videos");
+    }
+
+    const formData = new FormData();
+    formData.append("images", files);
+    formData.append("detail", caption);
+
+    createPost(formData);
+  };
 
   return (
     <Modal centered onHide={closeModal} show={showCreateModal}>
@@ -36,18 +63,33 @@ function PostUpload(props) {
         <Container>
           <div className="post-modal">
             <div className="post-modal-title">
-              {file && (
+              {!isEmpty(files) && (
                 <button className="back-arrow" onClick={backClickHandler}>
                   <BackArrow />
                 </button>
               )}
               <h1>Create new post</h1>
-              {file && <button className="share">Share</button>}
+              {!isEmpty(files) && (
+                <button className="share" onClick={shareClickHandler}>
+                  Share
+                </button>
+              )}
             </div>
-            {file ? (
+            {!isEmpty(files) ? (
               <div className="post-modal-content-upload">
                 <div className="preview-image">
-                  <img src={file} alt="preview-image" />
+                  <Carousel
+                    showArrows={true}
+                    showThumbs={false}
+                    showStatus={false}
+                    showIndicators={false}
+                  >
+                    {files.map((file, index) => (
+                      <div key={`${file.name}-${index}`}>
+                        <img alt={file.name} src={URL.createObjectURL(file)} />
+                      </div>
+                    ))}
+                  </Carousel>
                 </div>
                 <div className="post-info">
                   <UserInfoShort
@@ -55,7 +97,10 @@ function PostUpload(props) {
                     profileImage={user.profileImage}
                   />
                   <div>
-                    <textarea placeholder="Write a caption..." />
+                    <textarea
+                      onChange={captionChangeHandler}
+                      placeholder="Write a caption..."
+                    />
                   </div>
                 </div>
               </div>
@@ -65,6 +110,7 @@ function PostUpload(props) {
                 <span>Upload photos and videos here</span>
                 <div>
                   <input
+                    multiple
                     type="file"
                     ref={inputRef}
                     onChange={inputChangeHandler}
@@ -83,7 +129,8 @@ function PostUpload(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    file: state.modal.createModal.file,
+    files: state.modal.createModal.files,
+    isUploading: state.posts.isUploading,
     showCreateModal: state.modal.createModal.show,
   };
 };
@@ -91,8 +138,9 @@ const mapStateToProps = (state) => {
 // Map dispatch to props
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateFile: (url) => dispatch(modalActions.updateFile(url)),
     closeModal: () => dispatch(modalActions.closeCreateModal()),
+    createPost: (data) => dispatch(postActions.createPost(data)),
+    updateFiles: (url) => dispatch(modalActions.updateFiles(url)),
   };
 };
 

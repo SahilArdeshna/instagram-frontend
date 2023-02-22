@@ -1,9 +1,14 @@
 import React from "react";
 
-function Loading() {
+function Loading({ width = 50, height = 50 }) {
   return (
     <div id="splash-screen" className="splash-screen">
-      <svg className="splash-spinner" viewBox="0 0 50 50">
+      <svg
+        width={width}
+        height={height}
+        viewBox="0 0 50 50"
+        className="splash-spinner"
+      >
         <circle
           className="path"
           cx="25"

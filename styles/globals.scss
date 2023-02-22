@@ -831,6 +831,12 @@ nav {
   }
 }
 
+.carousel-root {
+  display: flex;
+  height: inherit;
+  justify-content: center;
+}
+
 .carousel.carousel-slider .control-arrow {
   top: 42% !important;
   border-radius: 50%;

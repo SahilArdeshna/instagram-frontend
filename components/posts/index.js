@@ -102,15 +102,15 @@ function Posts(props) {
   );
 }
 
-// // Map state to props
-// const mapStateToProps = (state) => {
-//   return {
-//     user: state.auth.user,
-//     posts: state.post.posts,
-//     isAuth: state.auth.isAuth,
-//     loading: state.post.loading,
-//   };
-// };
+// Map state to props
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+    posts: state.post.posts,
+    isAuth: state.auth.isAuth,
+    loading: state.post.loading,
+  };
+};
 
 // Map dispatch to props
 const mapDispatchToProps = (dispatch) => {
@@ -120,4 +120,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(undefined, mapDispatchToProps)(Posts);
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);

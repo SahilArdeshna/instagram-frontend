@@ -1,10 +1,11 @@
 import { isEmpty } from "lodash";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-import { useRef, useState } from "react";
 import { Modal, Container } from "react-bootstrap";
 import { Carousel } from "react-responsive-carousel";
+import { useCallback, useMemo, useRef, useState } from "react";
 
+import Loading from "../loading";
 import File from "../../icons/File";
 import BackArrow from "../../icons/BackArrow";
 import UserInfoShort from "../../widgets/UserInfoShort";
@@ -14,16 +15,41 @@ import * as modalActions from "../../store/modal/actions";
 function PostUpload(props) {
   const inputRef = useRef(null);
   const {
-    files,
     user,
-    isUploading,
+    files,
     closeModal,
     createPost,
     updateFiles,
+    isUploading,
     showCreateModal,
   } = props;
 
   const [caption, setCaption] = useState("");
+
+  const shareClickHandler = useCallback(() => {
+    if (isEmpty(files)) {
+      toast.error("Please upload images or videos");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("images", files);
+    formData.append("detail", caption);
+
+    createPost(formData);
+  }, [files, caption]);
+
+  const shareButton = useMemo(() => {
+    if (isUploading) {
+      return <Loading width={25} height={25} />;
+    }
+
+    return (
+      <button className="share" onClick={shareClickHandler}>
+        Share
+      </button>
+    );
+  }, [isUploading, shareClickHandler]);
 
   const onButtonClick = () => {
     if (!inputRef.current) return;
@@ -37,25 +63,13 @@ function PostUpload(props) {
 
     // File size limitation
 
-    updateFiles(files);
+    updateFiles([...files]);
     inputRef.current.value = "";
   };
 
   const backClickHandler = () => {};
 
   const captionChangeHandler = (e) => setCaption(e.target.value);
-
-  const shareClickHandler = () => {
-    if (!files) {
-      toast.error("Please upload images or videos");
-    }
-
-    const formData = new FormData();
-    formData.append("images", files);
-    formData.append("detail", caption);
-
-    createPost(formData);
-  };
 
   return (
     <Modal centered onHide={closeModal} show={showCreateModal}>
@@ -69,11 +83,7 @@ function PostUpload(props) {
                 </button>
               )}
               <h1>Create new post</h1>
-              {!isEmpty(files) && (
-                <button className="share" onClick={shareClickHandler}>
-                  Share
-                </button>
-              )}
+              {!isEmpty(files) && shareButton}
             </div>
             {!isEmpty(files) ? (
               <div className="post-modal-content-upload">
@@ -129,8 +139,8 @@ function PostUpload(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    isUploading: state.post.isUploading,
     files: state.modal.createModal.files,
-    isUploading: state.posts.isUploading,
     showCreateModal: state.modal.createModal.show,
   };
 };
@@ -140,7 +150,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     closeModal: () => dispatch(modalActions.closeCreateModal()),
     createPost: (data) => dispatch(postActions.createPost(data)),
-    updateFiles: (url) => dispatch(modalActions.updateFiles(url)),
+    updateFiles: (files) => dispatch(modalActions.updateFiles(files)),
   };
 };
 

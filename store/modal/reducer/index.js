@@ -21,6 +21,7 @@ const initialState = {
   },
   createModal: {
     files: [],
+    exit: false,
     show: false,
     discard: false,
   },
@@ -119,6 +120,14 @@ export const modalReducer = (state = initialState, action) => {
         createModal: {
           ...state.createModal,
           files: action.files,
+        },
+      };
+    case actionTypes.MODAL_CREATE_EXIT:
+      return {
+        ...state,
+        createModal: {
+          ...state.createModal,
+          exit: action.exit,
         },
       };
     default:

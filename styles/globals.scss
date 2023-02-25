@@ -9,6 +9,7 @@
   --color-efefef: #efefef;
   --image-background-color: #efefef;
   --primary-text: #262626;
+  --secondary-text: rgb(142, 142, 142)
 }
 
 html,
@@ -159,6 +160,7 @@ nav {
     transition: height 0.2s ease-in-out;
     width: 100%;
     z-index: 3;
+    background-color: white;
     border-bottom: 1px solid var(--border-color);
 
     .nav-container {
@@ -973,6 +975,7 @@ nav {
           font-size: 14px;
         }
 
+        .discard,
         .unfollow-and-delete {
           font-weight: 600;
           color: var(--danger);
@@ -1851,5 +1854,75 @@ hr {
         }
       }
     }
+  }
+}
+
+// @media (min-width: 648px) {
+//   .modal-dialog {
+//     width: 429px;
+//     max-width: 276px;
+//     min-width: 348px;
+//     min-height: 391px;
+//     max-height: 319px;
+//   }  
+// }
+
+// @media (min-width: 748px) {
+//   .modal-dialog {
+//     width: 529px;
+//     max-width: 376px;
+//     min-width: 348px;
+//     min-height: 391px;
+//     max-height: 419px;
+//   }  
+// }
+
+// @media (min-width: 848px) {
+//   .modal-dialog {
+//     width: 630px;
+//     max-width: 477px;
+//     min-width: 348px;
+//     min-height: 391px;
+//     max-height: 520px;
+//   }  
+// }
+
+// @media (min-width: 748px) {
+//   .modal-dialog {
+//     width: 529px;
+//     max-width: 376px;
+//     min-width: 348px;
+//     min-height: 391px;
+//     max-height: 419px;
+
+//   }  
+// }
+
+.create-modal {
+  z-index: 1040 !important;
+}
+
+.create-modal .modal-dialog {
+  // width: calc(100vw - 219px);
+  max-width: 855px;
+  // min-width: calc(100vw - 600px);
+  // min-height: 391px;
+  // max-height: calc(100vh - 329px)
+}
+
+.discard-content {
+  margin: 22px 0 16px 0 !important;
+
+  div {
+    color: var(--primary-text);
+    font-size: 20px !important;
+    line-height: 25px;    
+  }
+
+  span {
+    color: var(--secondary-text);
+    font-size: 14px;
+    line-height: 18px; 
+    padding-top: 12px;
   }
 }

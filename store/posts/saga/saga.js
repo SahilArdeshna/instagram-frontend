@@ -2,6 +2,7 @@ import { put } from "redux-saga/effects";
 
 import * as actions from "../actions";
 import { notify } from "../../../utils/toster";
+import * as modalActions from "../../modal/actions";
 import * as actionTypes from "../actions/actionTypes";
 import { getSinglePost, getPosts, deletePost, createPost } from "../postCrud";
 
@@ -19,8 +20,14 @@ export function* createPostSaga(action) {
       throw new Error(result.data.message);
     }
 
-    // Store post data into store
-    yield put(actions.postsFetched(result.data));
+    // Toster notification
+    notify("success", "Post created successfully.");
+
+    // Fetch all posts
+    yield put(actions.fetchPosts());
+
+    // Close create modal form
+    yield put(modalActions.closeCreateModal());
 
     // Call fetch success to set loading false
     yield put(actions.updateCreatePostLoading(false));

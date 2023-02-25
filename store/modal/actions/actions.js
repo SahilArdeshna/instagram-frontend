@@ -86,3 +86,10 @@ export const updateFiles = (files) => {
     files,
   };
 };
+
+export const updateExit = (exit) => {
+  return {
+    type: actionTypes.MODAL_CREATE_EXIT,
+    exit,
+  };
+};

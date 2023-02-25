@@ -5,6 +5,7 @@ import Footer from "../footer";
 import Navbar from "../navbar/Navbar";
 import ActionModal from "../modal/Action";
 import PostUpload from "../modal/PostUpload";
+import DiscardModal from "../modal/DiscardModal";
 import DeleteAndUnfollow from "../modal/DeleteAndUnfollow";
 
 function HomeLayout(props) {
@@ -67,6 +68,9 @@ function HomeLayout(props) {
 
       {/* post upload modal */}
       <PostUpload />
+
+      {/* discard modal */}
+      <DiscardModal />
     </section>
   );
 }

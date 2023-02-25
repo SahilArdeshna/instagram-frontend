@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { Modal, Container } from "react-bootstrap";
 import { Carousel } from "react-responsive-carousel";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import Loading from "../loading";
 import File from "../../icons/File";
@@ -17,10 +17,12 @@ function PostUpload(props) {
   const {
     user,
     files,
+    updateExit,
     closeModal,
     createPost,
     updateFiles,
     isUploading,
+    updateDiscard,
     showCreateModal,
   } = props;
 
@@ -33,8 +35,11 @@ function PostUpload(props) {
     }
 
     const formData = new FormData();
-    formData.append("images", files);
     formData.append("detail", caption);
+
+    for (let file of files) {
+      formData.append("images", file);
+    }
 
     createPost(formData);
   }, [files, caption]);
@@ -67,12 +72,35 @@ function PostUpload(props) {
     inputRef.current.value = "";
   };
 
-  const backClickHandler = () => {};
+  const backClickHandler = () => {
+    updateDiscard(true);
+  };
 
   const captionChangeHandler = (e) => setCaption(e.target.value);
 
+  const modalCloseHandler = () => {
+    if (isEmpty(files)) {
+      closeModal();
+      return;
+    }
+
+    updateExit(true);
+    updateDiscard(true);
+  };
+
+  useEffect(() => {
+    return () => {
+      setCaption("");
+    };
+  }, []);
+
   return (
-    <Modal centered onHide={closeModal} show={showCreateModal}>
+    <Modal
+      centered
+      show={showCreateModal}
+      className="create-modal"
+      onHide={modalCloseHandler}
+    >
       <Modal.Body>
         <Container>
           <div className="post-modal">
@@ -95,8 +123,11 @@ function PostUpload(props) {
                     showIndicators={false}
                   >
                     {files.map((file, index) => (
-                      <div key={`${file.name}-${index}`}>
-                        <img alt={file.name} src={URL.createObjectURL(file)} />
+                      <div key={`${file.originalname}-${index}`}>
+                        <img
+                          alt={file.originalname}
+                          src={URL.createObjectURL(file)}
+                        />
                       </div>
                     ))}
                   </Carousel>
@@ -150,7 +181,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     closeModal: () => dispatch(modalActions.closeCreateModal()),
     createPost: (data) => dispatch(postActions.createPost(data)),
+    updateExit: (exit) => dispatch(modalActions.updateExit(exit)),
     updateFiles: (files) => dispatch(modalActions.updateFiles(files)),
+    updateDiscard: (value) => dispatch(modalActions.updateDiscard(value)),
   };
 };
 

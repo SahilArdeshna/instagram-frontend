@@ -5,7 +5,9 @@ const POST_URL = `${process.env.NEXT_PUBLIC_BACKEND_API}/posts`;
 
 // Create post function
 export const createPost = async (payload) => {
-  return await axios.post(POST_URL, payload);
+  return await axios.post(POST_URL, payload, {
+    headers: { "Content-type": "multipart/form-data" },
+  });
 };
 
 // Get posts function

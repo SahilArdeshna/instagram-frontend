@@ -1,4 +1,5 @@
 export {
+  updateExit,
   updateFiles,
   updateDiscard,
   openActionModal,

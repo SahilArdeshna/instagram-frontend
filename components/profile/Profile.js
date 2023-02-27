@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRef } from "react";
 
 function Profile(props) {
@@ -45,6 +46,9 @@ function Profile(props) {
         <div className="detail-container">
           <div className="fullname-info">
             <h2>{user?.userName}</h2>
+            <Link passHref href="/accounts/edit">
+              <a className="edit-profile">Edit Profile</a>
+            </Link>
             <div className="setting">
               <button>
                 <svg
@@ -87,6 +91,8 @@ function Profile(props) {
             <h1>{user?.fullName}</h1>
             <br />
             <span>{user?.bio}</span>
+            <br />
+            {user?.website && <a>{user.website}</a>}
           </div>
         </div>
       </header>

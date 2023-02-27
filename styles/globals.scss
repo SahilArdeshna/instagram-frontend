@@ -9,7 +9,11 @@
   --color-efefef: #efefef;
   --image-background-color: #efefef;
   --primary-text: #262626;
-  --secondary-text: rgb(142, 142, 142)
+  --black: rgb(0, 0, 0);
+  --link: rgb(0, 55, 107);
+  --secondary-text: rgb(142, 142, 142);
+  --secondary-button-bg: rgb(239, 239, 239);
+  --secondary-button-hover: rgb(219, 219, 219);
 }
 
 html,
@@ -1147,13 +1151,28 @@ hr {
           white-space: nowrap;
           color: var(--font-black);
           font-weight: 300;
-          font-size: 28px;
+          font-size: 20px;
           line-height: 32px;
           margin: -5px 0 -6px;
         }
 
+        .edit-profile {
+          margin-left: 20px;
+          border: none;
+          color: var(--black);
+          background-color: var(--secondary-button-bg);
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 14px;
+          padding: 7px 16px !important;
+          text-decoration: none;       
+        }
+
+        .edit-profile:hover {
+          background-color: var(--secondary-button-hover);
+        }
+
         .setting {
-          flex-direction: row;
           flex-shrink: 0;
           margin-left: 5px;
 
@@ -1203,8 +1222,8 @@ hr {
         display: block;
 
         @media (min-width: 736px) {
-          font-size: 16px;
-          line-height: 24px;
+          font-size: 14px;
+          line-height: 14px;
           word-wrap: break-word;
         }
 
@@ -1214,9 +1233,18 @@ hr {
 
         h1 {
           display: inline;
-          font-size: 17px;
+          font-size: 14px;
           font-weight: 600;
           color: var(--font-black);
+        }
+
+        a {
+          color: var(--link);
+          text-decoration: none;
+        }
+
+        a:hover {
+          text-decoration: underline;
         }
       }
     }

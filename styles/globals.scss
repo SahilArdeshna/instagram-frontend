@@ -14,6 +14,8 @@
   --secondary-text: rgb(142, 142, 142);
   --secondary-button-bg: rgb(239, 239, 239);
   --secondary-button-hover: rgb(219, 219, 219);
+  --primary-button: rgb(0, 149, 246);
+  --primary-button-hover: rgb(24, 119, 242);
 }
 
 html,
@@ -122,7 +124,7 @@ textarea {
 // Div element
 #__next,
 article,
-div:not(.post-view, .post, .post-div, .popover, .container, .row, .input-group, .input-group-append, .Toastify, .Toastify__toast-container, .Toastify__toast, .Toastify__toast-body, .Toastify__progress-bar, .static-footer, .side-container, .modal, .modal-dialog, .modal-content, .modal-body, .modal-backdrop, .post-header, .profile-image-div),
+div:not(.label-div, .form-div, .post-view, .post, .post-div, .popover, .container, .row, .input-group, .input-group-append, .Toastify, .Toastify__toast-container, .Toastify__toast, .Toastify__toast-body, .Toastify__progress-bar, .static-footer, .side-container, .modal, .modal-dialog, .modal-content, .modal-body, .modal-backdrop, .post-header, .profile-image-div),
 footer,
 header,
 main,
@@ -949,6 +951,10 @@ nav {
 //   bottom: 0;
 //   margin-bottom: 52px;
 // }
+
+.static-footer {
+  margin-top: 10px;
+}
 
 @media (max-width: 1000px) {
   .side-container {
@@ -1885,47 +1891,6 @@ hr {
   }
 }
 
-// @media (min-width: 648px) {
-//   .modal-dialog {
-//     width: 429px;
-//     max-width: 276px;
-//     min-width: 348px;
-//     min-height: 391px;
-//     max-height: 319px;
-//   }  
-// }
-
-// @media (min-width: 748px) {
-//   .modal-dialog {
-//     width: 529px;
-//     max-width: 376px;
-//     min-width: 348px;
-//     min-height: 391px;
-//     max-height: 419px;
-//   }  
-// }
-
-// @media (min-width: 848px) {
-//   .modal-dialog {
-//     width: 630px;
-//     max-width: 477px;
-//     min-width: 348px;
-//     min-height: 391px;
-//     max-height: 520px;
-//   }  
-// }
-
-// @media (min-width: 748px) {
-//   .modal-dialog {
-//     width: 529px;
-//     max-width: 376px;
-//     min-width: 348px;
-//     min-height: 391px;
-//     max-height: 419px;
-
-//   }  
-// }
-
 .create-modal {
   z-index: 1040 !important;
 }
@@ -1952,5 +1917,137 @@ hr {
     font-size: 14px;
     line-height: 18px; 
     padding-top: 12px;
+  }
+}
+
+.user-info-container {
+  width: 100%;
+  max-width: 700px;
+  align-items: start;
+  border-radius: 3px;
+  margin: 30px auto 0 !important;
+  background-color: var(--white);
+  border: 1px solid var(--secondary-button-hover) !important;
+
+  .user-info {
+    display: flex;
+    margin-top: 32px;
+    flex-direction: row;
+    
+    @media (max-width: 735px) {
+      .profile-image {
+        margin: 2px 20px 0 20px;
+      }
+    }
+
+    @media (min-width: 736px) {
+      .profile-image {
+        margin: 2px 32px 0 124px;
+      }  
+    }
+
+    .profile-image {
+      width: 38px;
+      height: 38px;
+
+      button {
+        padding: 0;
+        border: none;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        background-color: var(--white);
+
+        img {
+          width: 38px;
+          height: 38px;
+        }
+      }
+
+      input {
+        display: none;
+      }
+    }
+
+    .username-container {
+      display: flex;
+      flex-direction: column;
+
+      .username {
+        font-size: 16px;
+        line-height: 24px;
+        color: var(--primary-text);
+      }
+
+      .profile-change {
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--primary-button);        
+      }
+
+      .profile-change:hover {
+        color: var(--link);
+      }
+    }
+  }
+
+  .form-container {
+    margin-bottom: 32px;
+
+    form {
+      margin: 16px 0;
+
+      .form-div {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        margin-bottom: 16px;
+
+        .label-div {
+          flex: 0 0 194px;
+          text-align: right;
+
+          label {
+            font-size: 16px;
+            font-weight: 600;            
+            margin-right: 32px;
+            color: var(--primary-text);
+            margin-bottom: 0 !important;
+          }
+        }
+
+        .input-div {
+          width: 100%;
+          max-width: 355px;
+        }
+
+        .button-div {
+          margin-top: 16px;
+
+          button {
+            border: none;
+            color: white;
+            border-radius: 8px;
+            padding: 7px 16px !important;
+            background-color: var(--primary-button);
+          }
+
+          button:hover:not(:disabled) {
+            background-color: var(--primary-button-hover)
+          }
+
+          button:disabled {
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+  }
+}
+
+.form-group {
+  input {
+    color: var(--primary-text);
   }
 }

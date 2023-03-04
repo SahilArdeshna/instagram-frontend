@@ -4,14 +4,10 @@ import { Form } from "react-final-form";
 import { Button, Card, Spinner } from "react-bootstrap";
 
 import FormInput from "../../components/Form/Input";
+import { loginSchema } from "../../validation/schema";
 import { mergeClassNames, yupValidator } from "../../utils/general";
 // import { ReactComponent as EyeIcon } from "../assets/icons/eye.svg";
 // import { ReactComponent as EyeSlashIcon } from "../assets/icons/eye-slash.svg";
-
-const defaultSchema = yup.object().shape({
-  username: yup.string().required(),
-  password: yup.string().required(),
-});
 
 const Login = ({
   className,
@@ -31,7 +27,7 @@ const Login = ({
       <Card.Body>
         <Form
           onSubmit={onSubmit}
-          validate={(values) => yupValidator(values, schema || defaultSchema)}
+          validate={(values) => yupValidator(values, schema || loginSchema)}
         >
           {({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>

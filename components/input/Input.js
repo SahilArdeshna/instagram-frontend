@@ -32,7 +32,7 @@ const Input = ({
 
   return (
     <Form.Group className={formGroupClass}>
-      <Form.Label className={labelClass}>{label}</Form.Label>
+      {label && <Form.Label className={labelClass}>{label}</Form.Label>}
 
       {(append || prepend) && (
         <InputGroup>

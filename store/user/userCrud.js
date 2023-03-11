@@ -17,3 +17,20 @@ export const unfollow = async (unfollowId) => {
 export const fetchUserData = async (userName) => {
   return await axios.get(`${USER_URL}/${userName}/posts`);
 };
+
+// Upload profile image
+export const uploadProfileImage = async (payload) => {
+  return await axios.post(`${USER_URL}/uploadImage`, payload, {
+    headers: { "Content-type": "multipart/form-data" },
+  });
+};
+
+// Delete profile image
+export const deleteProfileImage = async () => {
+  return await axios.delete(`${USER_URL}/delete`);
+};
+
+// Get user data
+export const getUser = async (userId) => {
+  return await axios.get(`${USER_URL}/${userId}`);
+};

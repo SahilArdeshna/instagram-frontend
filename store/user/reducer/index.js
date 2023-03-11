@@ -15,6 +15,7 @@ const initialState = {
     page: 1,
     limit: 10,
   },
+  isImageProcessing: false,
 };
 
 // Reducer function
@@ -49,6 +50,25 @@ export const userReducer = (state = initialState, action) => {
     case actionTypes.USER_INIT:
       return {
         ...initialState,
+      };
+
+    case actionTypes.USER_PROFILE_IMAGE_START:
+      return {
+        ...state,
+        error: null,
+        isImageProcessing: true,
+      };
+    case actionTypes.USER_PROFILE_IMAGE_FAILD:
+      return {
+        ...state,
+        error: action.error,
+        isImageProcessing: false,
+      };
+    case actionTypes.USER_PROFILE_IMAGE_SUCCESS:
+      return {
+        ...state,
+        error: null,
+        isImageProcessing: false,
       };
     default:
       return state;

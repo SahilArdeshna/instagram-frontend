@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import { OverlayTrigger, Popover } from "react-bootstrap";
@@ -13,6 +12,11 @@ function Navbar(props) {
   const router = useRouter();
   const { user, logout, showCreateModal, openCreateModal, closeCreateModal } =
     props;
+
+  let profileImage = "/user-img.jpg";
+  if (user?.profileImage?.url) {
+    profileImage = user.profileImage.url;
+  }
 
   // On logout handler function
   const onLogoutHandler = () => {
@@ -197,9 +201,9 @@ function Navbar(props) {
                     overlay={popover}
                     rootClose={true}
                   >
-                    <Image
+                    <img
                       alt="user-img"
-                      src="/user-img.jpg"
+                      src={profileImage}
                       width="100%"
                       height="100%"
                     />

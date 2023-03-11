@@ -6,4 +6,5 @@ export {
   loginSuccess,
   signup,
   logout,
+  updateAuthUser,
 } from "./actions";

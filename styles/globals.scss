@@ -124,7 +124,7 @@ textarea {
 // Div element
 #__next,
 article,
-div:not(.label-div, .form-div, .post-view, .post, .post-div, .popover, .container, .row, .input-group, .input-group-append, .Toastify, .Toastify__toast-container, .Toastify__toast, .Toastify__toast-body, .Toastify__progress-bar, .static-footer, .side-container, .modal, .modal-dialog, .modal-content, .modal-body, .modal-backdrop, .post-header, .profile-image-div),
+div:not(.profile-loader, .label-div, .form-div, .post-view, .post, .post-div, .popover, .container, .row, .input-group, .input-group-append, .Toastify, .Toastify__toast-container, .Toastify__toast, .Toastify__toast-body, .Toastify__progress-bar, .static-footer, .side-container, .modal, .modal-dialog, .modal-content, .modal-body, .modal-backdrop, .post-header, .profile-image-div),
 footer,
 header,
 main,
@@ -1949,6 +1949,7 @@ hr {
     .profile-image {
       width: 38px;
       height: 38px;
+      position: relative;
 
       button {
         padding: 0;
@@ -1961,6 +1962,27 @@ hr {
         img {
           width: 38px;
           height: 38px;
+          border-radius: 50%;
+        }
+
+      }
+
+
+      .profile-loader {
+        // top: 50%;
+        // left: 50%;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        align-items: stretch;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute !important;
+        transition: translate(-50%, -50%);
+
+        svg {
+          animation: ig-spinner 1.2s steps(12) infinite ;
         }
       }
 
@@ -2049,5 +2071,14 @@ hr {
 .form-group {
   input {
     color: var(--primary-text);
+  }
+}
+
+@keyframes ig-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

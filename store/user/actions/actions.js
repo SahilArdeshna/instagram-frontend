@@ -61,3 +61,40 @@ export const userInit = () => {
     type: actionTypes.USER_INIT,
   };
 };
+
+// Upload profile image
+export const userProfileImageUpload = (payload, userId) => {
+  return {
+    type: actionTypes.USER_PROFILE_IMAGE_UPLOAD,
+    payload,
+    userId,
+  };
+};
+
+// Delete profile image
+export const userProfileImageDelete = () => {
+  return {
+    type: actionTypes.USER_PROFILE_IMAGE_DELETE,
+  };
+};
+
+// User profile upload start
+export const userProfileUploadStart = () => {
+  return {
+    type: actionTypes.USER_PROFILE_IMAGE_START,
+  };
+};
+
+// User profile upload failed
+export const userProfileUploadFaild = () => {
+  return {
+    type: actionTypes.USER_PROFILE_IMAGE_FAILD,
+  };
+};
+
+// User profile upload success
+export const userProfileUploadSuccess = () => {
+  return {
+    type: actionTypes.USER_PROFILE_IMAGE_SUCCESS,
+  };
+};

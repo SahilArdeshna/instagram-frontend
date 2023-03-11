@@ -54,3 +54,11 @@ export const logout = () => {
     type: actionTypes.AUTH_LOGOUT,
   };
 };
+
+// Update authh user data
+export const updateAuthUser = (userData) => {
+  return {
+    type: actionTypes.AUTH_USER_UPDATE,
+    userData,
+  };
+};

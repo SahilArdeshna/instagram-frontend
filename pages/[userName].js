@@ -10,12 +10,12 @@ import Tags from "../components/profile/Tags";
 import PostsContainer from "../components/profile/Post";
 
 const User = (props) => {
-  const { query, isReady } = useRouter();
+  const { query, isReady, push, replace } = useRouter();
   const { userName } = query;
   const { user, isAuth, error, loading, initState, fetchUserData } = props;
 
   if (!isAuth) {
-    router.push("/accounts/login");
+    push("/accounts/login");
     return <Loading />;
   }
 
@@ -38,7 +38,7 @@ const User = (props) => {
     props.logout();
 
     // Redirect to login page
-    router.replace("/accounts/login");
+    replace("/accounts/login");
   }
 
   if (loading || !isReady) {

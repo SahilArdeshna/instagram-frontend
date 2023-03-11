@@ -56,6 +56,11 @@ export const authReducer = persistReducer(
           ...initialState,
         };
       }
+      case actionTypes.AUTH_USER_UPDATE:
+        return {
+          ...state,
+          user: action.userData,
+        };
       default:
         return state;
     }

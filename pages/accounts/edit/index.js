@@ -2,22 +2,56 @@ import { isEmpty } from "lodash";
 import { connect } from "react-redux";
 import { useMemo, useRef } from "react";
 import { Form } from "react-final-form";
+import { useRouter } from "next/router";
 
+import Loader from "../../../icons/Loader";
+import Loading from "../../../components/loading";
 import { yupValidator } from "../../../utils/general";
 import FormInput from "../../../components/Form/Input";
 import HomeLayout from "../../../components/layout/Home";
 import { profileSchema } from "../../../validation/schema";
+import * as userActions from "../../../store/user/actions";
 
 const EditProfile = (props) => {
-  const { user } = props;
   const inputRef = useRef(null);
+  const { isReady, push, replace } = useRouter();
+  const {
+    user,
+    error,
+    isAuth,
+    loading,
+    uploadProfile,
+    removeProfile,
+    isImageProcessing,
+  } = props;
+
+  if (!isAuth) {
+    push("/accounts/login");
+    return <Loading />;
+  }
+
+  let profileImage = "/user-img.jpg";
+  if (user?.profileImage?.url) {
+    profileImage = user.profileImage.url;
+  }
 
   const buttonClickHandler = () => {
     inputRef.current.click();
   };
 
   const fileChangeHandler = (e) => {
-    console.log(e.target.file);
+    console.log(e.target.files);
+    const file = e.target?.files[0];
+
+    if (!file) {
+      toast.error("Please upload images!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("profileImage", file);
+
+    uploadProfile(formData, user._id);
     inputRef.current.value = "";
   };
 
@@ -29,17 +63,17 @@ const EditProfile = (props) => {
     }
   };
 
-  const defaultValues = useMemo(() => {
-    if (!user || isEmpty(user)) return {};
+  if (error && error.statusCode === 401) {
+    // Logout from web-app
+    props.logout();
 
-    return {
-      email: user.email,
-      bio: user.bio || "",
-      userName: user.userName,
-      fullName: user.fullName,
-      website: user.website || "",
-    };
-  }, [user]);
+    // Redirect to login page
+    replace("/accounts/login");
+  }
+
+  if (loading || !isReady) {
+    return <Loading />;
+  }
 
   return (
     <HomeLayout>
@@ -47,8 +81,13 @@ const EditProfile = (props) => {
         <div className="user-info">
           <div className="profile-image">
             <button onClick={buttonClickHandler}>
-              <img alt="user-img" src="/user-img.jpg" />
+              <img alt="user-img" src={profileImage} />
             </button>
+            {isImageProcessing && (
+              <div className="profile-loader">
+                <Loader />
+              </div>
+            )}
             <input type="file" ref={inputRef} onChange={fileChangeHandler} />
           </div>
           <div className="username-container">
@@ -61,6 +100,7 @@ const EditProfile = (props) => {
         <div className="form-container">
           <Form
             onSubmit={onSubmit}
+            validate={(values) => yupValidator(values, profileSchema)}
             initialValues={{
               email: user.email,
               bio: user.bio || "",
@@ -68,7 +108,6 @@ const EditProfile = (props) => {
               fullName: user.fullName,
               website: user.website || "",
             }}
-            validate={(values) => yupValidator(values, profileSchema)}
           >
             {({ handleSubmit, submitting, pristine }) => (
               <form onSubmit={handleSubmit}>
@@ -114,7 +153,11 @@ const EditProfile = (props) => {
                     <label>Email address</label>
                   </div>
                   <div className="input-div">
-                    <FormInput name="email" placeHolder="Email address" />
+                    <FormInput
+                      disabled
+                      name="email"
+                      placeHolder="Email address"
+                    />
                   </div>
                 </div>
                 <div className="form-div">
@@ -142,13 +185,16 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
     isAuth: state.auth.isAuth,
     loading: state.auth.loading,
+    isImageProcessing: state.user.isImageProcessing,
   };
 };
 
 // Map dispatch to props
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (values) => dispatch(authActions.login(values)),
+    removeProfile: () => dispatch(userActions.userProfileImageDelete()),
+    uploadProfile: (payload, userId) =>
+      dispatch(userActions.userProfileImageUpload(payload, userId)),
   };
 };
 

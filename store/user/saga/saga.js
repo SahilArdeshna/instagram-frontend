@@ -4,13 +4,15 @@ import * as actions from "../actions";
 import { notify } from "../../../utils/toster";
 import * as authActions from "../../auth/actions";
 import * as postActions from "../../posts/actions";
+import * as actionTypes from "../actions/actionTypes";
 import {
   follow,
+  getUser,
   unfollow,
+  searchUser,
   fetchUserData,
   uploadProfileImage,
   deleteProfileImage,
-  getUser,
 } from "../userCrud";
 
 // Follow function
@@ -172,5 +174,36 @@ export function* deleteProfileImageSaga(action) {
 
     // Call fetch faild to store error message in state
     yield put(actions.userProfileUploadFaild(err?.response?.data));
+  }
+}
+
+// Search global user
+export function* searchUserGlobalSaga(action) {
+  try {
+    // Call fetch start to displaying loading spinner
+    yield put({ type: actionTypes.USER_SEARCH_START });
+
+    // Call search user axios function
+    const result = yield searchUser(
+      action.page,
+      action.limit,
+      action.searchInput
+    );
+
+    // If response error found throw error
+    if (result.data && result.data.statusCode === 400) {
+      throw new Error(result.data.message);
+    }
+
+    // Call fetch success to set loading false
+    yield put({
+      type: actionTypes.USER_SEARCH_SUCCESS,
+      users: result.data || [],
+    });
+  } catch (err) {
+    console.log(err);
+
+    // Toster notification
+    notify("error", err?.response?.data?.message);
   }
 }

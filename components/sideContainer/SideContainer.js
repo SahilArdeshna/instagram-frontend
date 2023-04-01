@@ -1,4 +1,5 @@
 import Link from "next/link";
+import UserInfo from "../../widgets/UserInfo";
 
 import Footer from "../footer";
 
@@ -13,19 +14,11 @@ function SideContainer(props) {
 
   return (
     <div className="side-container">
-      <div className="user-detail">
-        <div className="user-image-div">
-          <Link href={`/${user.userName}`}>
-            <img alt="user-img" src={profileImage} width="56px" height="56px" />
-          </Link>
-        </div>
-        <div className="user-name-div">
-          <div className="username">
-            <Link href={`/${user.userName}`}>{user?.userName}</Link>
-          </div>
-          <div className="fullname">{user?.fullName}</div>
-        </div>
-      </div>
+      <UserInfo
+        fullName={user?.fullName}
+        userName={user?.userName}
+        profileImage={profileImage}
+      />
       <div className="suggestions">
         <div className="title-info">
           <div className="title">Suggestions For You</div>

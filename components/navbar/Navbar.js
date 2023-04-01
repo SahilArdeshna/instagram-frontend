@@ -1,17 +1,33 @@
 import Link from "next/link";
+import { isEmpty } from "lodash";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import { OverlayTrigger, Popover } from "react-bootstrap";
+import { useCallback, useEffect, useRef, useState } from "react";
 
+import Loader from "../../icons/Loader";
 import CreateIcon from "../../icons/Create";
+import UserInfo from "../../widgets/UserInfo";
 import CreateBlackIcon from "../../icons/CreateBlack";
+import * as userActions from "../../store/user/actions";
 import * as authActions from "../../store/auth/actions";
 import * as modalActions from "../../store/modal/actions";
 
 function Navbar(props) {
   const router = useRouter();
-  const { user, logout, showCreateModal, openCreateModal, closeCreateModal } =
-    props;
+  const timeoutRef = useRef();
+  const {
+    user,
+    logout,
+    searchUser,
+    showCreateModal,
+    openCreateModal,
+    closeCreateModal,
+    search: { users, page, limit, isSearching },
+  } = props;
+
+  const [isFocused, setIsFocused] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   let profileImage = "/user-img.jpg";
   if (user?.profileImage?.url) {
@@ -26,6 +42,8 @@ function Navbar(props) {
     // Redirect user to login page
     router.replace("/accounts/login");
   };
+
+  const inputChangeHandler = (e) => setSearchInput(e.target.value);
 
   // Popover
   const popover = (
@@ -62,6 +80,28 @@ function Navbar(props) {
     </Popover>
   );
 
+  const globalSearch = useCallback(() => {
+    try {
+      clearTimeout(timeoutRef.current);
+
+      if (!searchInput) return;
+
+      timeoutRef.current = setTimeout(() => {
+        searchUser(page, limit, searchInput);
+      }, 2000);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [page, limit, searchInput]);
+
+  useEffect(() => {
+    globalSearch();
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
+  }, [globalSearch]);
+
   return (
     <nav>
       <div className="navbar-div">
@@ -79,13 +119,65 @@ function Navbar(props) {
             </Link>
           </div>
           <div className="search-container">
-            <input className="search-input" />
-            <div className="search-div">
-              <div className="search">
-                <span className="search-icon"></span>
-                <span className="search-title">Search</span>
+            <input
+              autoFocus
+              type="text"
+              value={searchInput}
+              placeholder="Search"
+              className="search-input"
+              onChange={inputChangeHandler}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+            />
+            {!isFocused && !searchInput && (
+              <div
+                tabIndex="0"
+                className="search-div"
+                onClick={() => setIsFocused(true)}
+              >
+                <div className="search">
+                  <span className="search-icon"></span>
+                  <span className="search-title">Search</span>
+                </div>
               </div>
-            </div>
+            )}
+            {searchInput && (
+              <div
+                tabIndex="0"
+                role="button"
+                className="input-clear-icon"
+                onClick={() => setSearchInput("")}
+              ></div>
+            )}
+            {searchInput && (
+              <div className="global-search">
+                {!isEmpty(users) && (
+                  <div className="search-result">
+                    {users.map((user) => (
+                      <UserInfo
+                        width="44"
+                        height="44"
+                        global={true}
+                        fullName={user?.fullName}
+                        userName={user?.userName}
+                        profileImage={profileImage}
+                      />
+                    ))}
+                  </div>
+                )}
+                {isSearching && (
+                  <div
+                    className="profile-loader"
+                    style={{ alignItems: "center" }}
+                  >
+                    <Loader />
+                  </div>
+                )}
+                {!isSearching && isEmpty(users) && (
+                  <div className="empty-results">No searche results.</div>
+                )}
+              </div>
+            )}
           </div>
           <div className="other-nav">
             <div className="other-div">
@@ -222,6 +314,7 @@ function Navbar(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    search: state.user.search,
     showCreateModal: state.modal.createModal.show,
   };
 };
@@ -232,6 +325,8 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => dispatch(authActions.logout()),
     openCreateModal: () => dispatch(modalActions.openCreateModal()),
     closeCreateModal: () => dispatch(modalActions.closeCreateModal()),
+    searchUser: (page, limit, searchInput) =>
+      dispatch(userActions.searchUserGlobal(page, limit, searchInput)),
   };
 };
 

@@ -98,3 +98,13 @@ export const userProfileUploadSuccess = () => {
     type: actionTypes.USER_PROFILE_IMAGE_SUCCESS,
   };
 };
+
+// Search user
+export const searchUserGlobal = (page, limit, searchInput) => {
+  return {
+    type: actionTypes.USER_SEARCH,
+    page,
+    limit,
+    searchInput,
+  };
+};

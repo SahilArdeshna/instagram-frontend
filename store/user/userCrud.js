@@ -34,3 +34,10 @@ export const deleteProfileImage = async () => {
 export const getUser = async (userId) => {
   return await axios.get(`${USER_URL}/${userId}`);
 };
+
+// Search user
+export const searchUser = async (page, limit, searchInput) => {
+  return await axios.get(
+    `${USER_URL}?search=${searchInput}&page=${page}&limit=${limit}`
+  );
+};

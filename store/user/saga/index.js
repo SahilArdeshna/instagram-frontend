@@ -5,6 +5,7 @@ import {
   fetchUserSaga,
   userFollowSaga,
   userUnfollowSaga,
+  searchUserGlobalSaga,
   uploadProfileImageSaga,
   deleteProfileImageSaga,
 } from "./saga";
@@ -16,6 +17,7 @@ export function* watchUser() {
     takeEvery(actionTypes.USER_FETCH, fetchUserSaga),
     takeEvery(actionTypes.USER_FOLLOW, userFollowSaga),
     takeEvery(actionTypes.USER_UNFOLLOW, userUnfollowSaga),
+    takeEvery(actionTypes.USER_SEARCH, searchUserGlobalSaga),
     takeEvery(actionTypes.USER_PROFILE_IMAGE_UPLOAD, uploadProfileImageSaga),
     takeEvery(actionTypes.USER_PROFILE_IMAGE_DELETE, deleteProfileImageSaga),
   ]);

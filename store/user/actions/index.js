@@ -7,6 +7,7 @@ export {
   userSuccess,
   fetchUserData,
   userDataFetched,
+  searchUserGlobal,
   userProfileUploadFaild,
   userProfileUploadStart,
   userProfileImageUpload,

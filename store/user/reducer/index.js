@@ -13,7 +13,8 @@ const initialState = {
   search: {
     users: [],
     page: 1,
-    limit: 10,
+    limit: 50,
+    isSearching: false,
   },
   isImageProcessing: false,
 };
@@ -69,6 +70,23 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         error: null,
         isImageProcessing: false,
+      };
+    case actionTypes.USER_SEARCH_START:
+      return {
+        ...state,
+        search: {
+          ...state.search,
+          isSearching: true,
+        },
+      };
+    case actionTypes.USER_SEARCH_SUCCESS:
+      return {
+        ...state,
+        search: {
+          ...state.search,
+          isSearching: false,
+          users: action.users,
+        },
       };
     default:
       return state;

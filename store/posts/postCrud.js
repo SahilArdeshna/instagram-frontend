@@ -24,3 +24,13 @@ export const getSinglePost = async (postId) => {
 export const deletePost = async (postId) => {
   return await axios.delete(`${POST_URL}/${postId}`);
 };
+
+// Post like function
+export const postLike = async (postId) => {
+  return await axios.put(`${POST_URL}/${postId}/like`);
+};
+
+// Post unlike function
+export const postUnlike = async (postId) => {
+  return await axios.put(`${POST_URL}/${postId}/unlike`);
+};

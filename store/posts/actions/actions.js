@@ -83,3 +83,19 @@ export const updateCreatePostLoading = (data) => {
     isUploading: data,
   };
 };
+
+// Post like
+export const postLike = (postId) => {
+  return {
+    type: actionTypes.POST_LIKE,
+    postId,
+  };
+};
+
+// Post unlike
+export const postUnlike = (postId) => {
+  return {
+    type: actionTypes.POST_UNLIKE,
+    postId,
+  };
+};

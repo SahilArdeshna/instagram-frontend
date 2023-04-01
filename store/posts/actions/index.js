@@ -1,9 +1,11 @@
 export {
+  postLike,
   postStart,
   postFaild,
   postsInit,
   fetchPosts,
   createPost,
+  postUnlike,
   postDelete,
   postSuccess,
   postsFetched,

@@ -150,7 +150,8 @@ div:not(
     .modal-body,
     .modal-backdrop,
     .post-header,
-    .profile-image-div
+    .profile-image-div,
+    .restricted-div
   ),
 footer,
 header,
@@ -841,6 +842,39 @@ nav {
           }
         }
 
+        .social-container {
+          padding: 6px 12px;
+
+          .social-icon {
+            width: max-content;
+            // height: 24px;
+            padding: 4px 4px 8px 4px;
+
+            .social {
+              animation-duration: 0.45s;
+              animation-name: like-button-animation;
+              animation-timing-function: ease-in-out;
+              transform: scale(1);
+              cursor: pointer;
+            }
+
+            .social-hover:hover {
+              fill: gray;
+            }
+          }
+
+          .social-stats {
+            padding: 4px 4px 0px;
+
+            .likes {
+              gap: 5px;
+              display: flex;
+              font-weight: bold;
+              flex-direction: row;
+            }
+          }
+        }
+
         .post-detail {
           padding: 0;
 
@@ -1229,34 +1263,71 @@ hr {
           margin: -5px 0 -6px;
         }
 
-        .edit-profile {
+        .restricted-div {
+          display: flex;
+          flex-shrink: 1;
+          align-items: center;
+          flex-direction: row;
+
+          .edit-profile {
+            margin-left: 20px;
+            border: none;
+            color: var(--black);
+            background-color: var(--secondary-button-bg);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 7px 16px !important;
+            text-decoration: none;
+          }
+
+          .edit-profile:hover {
+            background-color: var(--secondary-button-hover);
+          }
+
+          .setting {
+            flex-shrink: 0;
+            margin-left: 5px;
+
+            button {
+              align-items: center;
+              background: 0 0;
+              border: 0;
+              cursor: pointer;
+              display: flex;
+              justify-content: center;
+              padding: 8px;
+            }
+          }
+        }
+
+        .social-relation {
           margin-left: 20px;
-          border: none;
-          color: var(--black);
-          background-color: var(--secondary-button-bg);
-          border-radius: 8px;
-          font-weight: 600;
-          font-size: 14px;
-          padding: 7px 16px !important;
-          text-decoration: none;
-        }
-
-        .edit-profile:hover {
-          background-color: var(--secondary-button-hover);
-        }
-
-        .setting {
-          flex-shrink: 0;
-          margin-left: 5px;
 
           button {
-            align-items: center;
-            background: 0 0;
-            border: 0;
+            box-sizing: border-box;
             cursor: pointer;
-            display: flex;
-            justify-content: center;
-            padding: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 7px 16px !important;
+            pointer-events: auto;
+            text-overflow: ellipsis;
+            text-transform: inherit;
+            width: auto;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            line-height: 18px;
+          }
+
+          .following-profile {
+            color: var(--black);
+            background-color: var(--secondary-button-bg);
+          }
+
+          .follow-profile {
+            color: var(--white);
+            background-color: var(--primary-button);
           }
         }
       }
@@ -2144,5 +2215,20 @@ hr {
 
   svg {
     animation: ig-spinner 1.2s steps(12) infinite;
+  }
+}
+
+@keyframes like-button-animation {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
   }
 }

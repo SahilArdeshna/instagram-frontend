@@ -13,3 +13,6 @@ export const POST_DELETE = "POST_DELETE";
 
 export const POST_CREATE = "POST_CREATE";
 export const POST_CREATE_STAT_UPDATE = "POST_CREATE_STAT_UPDATE";
+
+export const POST_LIKE = "POST_LIKE";
+export const POST_UNLIKE = "POST_UNLIKE";

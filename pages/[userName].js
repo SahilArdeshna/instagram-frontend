@@ -12,7 +12,8 @@ import PostsContainer from "../components/profile/Post";
 const User = (props) => {
   const { query, isReady, push, replace } = useRouter();
   const { userName } = query;
-  const { user, isAuth, error, loading, initState, fetchUserData } = props;
+  const { user, authUser, isAuth, error, loading, initState, fetchUserData } =
+    props;
 
   if (!isAuth) {
     push("/accounts/login");
@@ -48,7 +49,7 @@ const User = (props) => {
   return (
     <HomeLayout>
       <div className="user-container">
-        <Profile user={user} />
+        <Profile user={user} authUser={authUser} />
         <Tags userName={userName} />
         <PostsContainer posts={user?.posts} />
       </div>
@@ -60,6 +61,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.user.user,
     error: state.user.error,
+    authUser: state.auth.user,
     isAuth: state.auth.isAuth,
     loading: state.user.loading,
   };

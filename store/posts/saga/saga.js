@@ -4,7 +4,14 @@ import * as actions from "../actions";
 import { notify } from "../../../utils/toster";
 import * as modalActions from "../../modal/actions";
 import * as actionTypes from "../actions/actionTypes";
-import { getSinglePost, getPosts, deletePost, createPost } from "../postCrud";
+import {
+  getPosts,
+  postLike,
+  postUnlike,
+  deletePost,
+  createPost,
+  getSinglePost,
+} from "../postCrud";
 
 // Create post function
 export function* createPostSaga(action) {
@@ -108,8 +115,6 @@ export function* deletePostSaga(action) {
     // Call fetch start to displaying loading spinner
     yield put(actions.postStart());
 
-    console.log("action.id", action.id);
-
     // Call login axios function
     const result = yield deletePost(action.id);
 
@@ -134,5 +139,47 @@ export function* deletePostSaga(action) {
 
     // Call fetch faild to store error message in state
     yield put(actions.postFaild(err.response.data));
+  }
+}
+
+// Like post saga function
+export function* postLikeSaga(action) {
+  try {
+    // Call post like axios function
+    const result = yield postLike(action.postId);
+
+    // If response error found throw error
+    if (result?.data && result?.data?.statusCode === 400) {
+      throw new Error(result?.data?.message);
+    }
+
+    // Store post data into store
+    yield put(actions.fetchPosts());
+  } catch (error) {
+    console.log(err);
+
+    // Toster notification
+    notify("error", err?.response?.data?.message);
+  }
+}
+
+// Unlike post saga function
+export function* postUnlikeSaga(action) {
+  try {
+    // Call post unlike axios function
+    const result = yield postUnlike(action.postId);
+
+    // If response error found throw error
+    if (result?.data && result?.data?.statusCode === 400) {
+      throw new Error(result?.data?.message);
+    }
+
+    // Store post data into store
+    yield put(actions.fetchPosts());
+  } catch (error) {
+    console.log(err);
+
+    // Toster notification
+    notify("error", err?.response?.data?.message);
   }
 }

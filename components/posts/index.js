@@ -3,11 +3,14 @@ import Link from "next/link";
 import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 
+import LikeIcon from "../../icons/LikeIcon";
+import UnlikeIcon from "../../icons/UnlikeIcon";
 import ActionButton from "../button/ActionButton";
+import * as postActions from "../../store/posts/actions";
 import * as modalActions from "../../store/modal/actions";
 
 function Posts(props) {
-  const { posts, openModal } = props;
+  const { posts, user, postLike, postUnlike, openModal } = props;
 
   // Action click handler function
   const actionClickHandler = (e, post) => {
@@ -21,9 +24,18 @@ function Posts(props) {
     openModal(author, postId, isFollowing);
   };
 
+  const likeClickHandler = (postId) => {
+    postLike(postId);
+  };
+
+  const unlikeClickHandler = (postId) => {
+    postUnlike(postId);
+  };
+
   let postsRender;
   postsRender = posts.map((post) => {
     let profileImage = "/user-img.jpg";
+    const isLiked = (post?.likes || []).includes(user._id);
 
     if (post.author?.profileImage?.url) {
       profileImage = post.author.profileImage.url;
@@ -75,6 +87,30 @@ function Posts(props) {
             </div>
           </div>
         </div>
+        <div className="social-container">
+          <div className="social-icon">
+            {isLiked ? (
+              <span
+                className="social"
+                onClick={() => unlikeClickHandler(post._id)}
+              >
+                <UnlikeIcon />
+              </span>
+            ) : (
+              <span
+                className="social social-hover"
+                onClick={() => likeClickHandler(post._id)}
+              >
+                <LikeIcon />
+              </span>
+            )}
+          </div>
+          <div className="social-stats">
+            <div className="likes">
+              {post?.likes ? post.likes.length : 0} <span>likes</span>
+            </div>
+          </div>
+        </div>
         <div className="post-detail">
           <div className="detail-container">
             <div className="detail-div">
@@ -115,6 +151,8 @@ const mapStateToProps = (state) => {
 // Map dispatch to props
 const mapDispatchToProps = (dispatch) => {
   return {
+    postLike: (postId) => dispatch(postActions.postLike(postId)),
+    postUnlike: (postId) => dispatch(postActions.postUnlike(postId)),
     openModal: (author, postId, isFollowing) =>
       dispatch(modalActions.openActionModal(author, postId, isFollowing)),
   };

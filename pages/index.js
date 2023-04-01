@@ -40,8 +40,6 @@ function Home(props) {
     return <Loading />;
   }
 
-  console.log("main feed page");
-
   return (
     <>
       <HomeLayout>

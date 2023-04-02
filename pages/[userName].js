@@ -12,8 +12,17 @@ import PostsContainer from "../components/profile/Post";
 const User = (props) => {
   const { query, isReady, push, replace } = useRouter();
   const { userName } = query;
-  const { user, authUser, isAuth, error, loading, initState, fetchUserData } =
-    props;
+  const {
+    user,
+    error,
+    isAuth,
+    loading,
+    authUser,
+    initState,
+    followUser,
+    unfollowUser,
+    fetchUserData,
+  } = props;
 
   if (!isAuth) {
     push("/accounts/login");
@@ -49,7 +58,12 @@ const User = (props) => {
   return (
     <HomeLayout>
       <div className="user-container">
-        <Profile user={user} authUser={authUser} />
+        <Profile
+          user={user}
+          authUser={authUser}
+          followUser={followUser}
+          unfollowUser={unfollowUser}
+        />
         <Tags userName={userName} />
         <PostsContainer posts={user?.posts} />
       </div>
@@ -72,6 +86,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     initState: () => dispatch(userActions.userInit()),
     fetchUserData: (userName) => dispatch(userActions.fetchUserData(userName)),
+    followUser: (userId, userName) =>
+      dispatch(userActions.follow(userId, userName)),
+    unfollowUser: (userId, userName) =>
+      dispatch(userActions.unfollow(userId, userName)),
   };
 };
 

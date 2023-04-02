@@ -1,6 +1,7 @@
 import { put } from "redux-saga/effects";
 
 import * as actions from "../actions";
+import { me } from "../../user/userCrud";
 import { login, signup } from "../authCrud";
 import { notify } from "../../../utils/toster";
 
@@ -84,5 +85,23 @@ export function* signupSaga(action) {
 
     // Call fetch faild to store error message in state
     yield put(actions.authFaild(errMsg));
+  }
+}
+
+// Auth user get data function
+export function* meSaga(action) {
+  try {
+    // Call me axios function
+    const result = yield me();
+
+    // If response error found throw error
+    if (result.data && result.data.statusCode === 400) {
+      throw new Error(result.data.message);
+    }
+
+    // Call fetch success to set loading false
+    yield put(actions.updateAuthUser(result.data));
+  } catch (err) {
+    console.log(err);
   }
 }

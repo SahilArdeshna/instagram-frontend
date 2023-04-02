@@ -1,6 +1,6 @@
 import { takeEvery, all } from "redux-saga/effects";
 
-import { loginSaga, signupSaga } from "./saga";
+import { loginSaga, meSaga, signupSaga } from "./saga";
 import * as actionTypes from "../actions/actionTypes";
 
 // Watch auth function generator
@@ -9,5 +9,6 @@ export function* watchAuth() {
     // takeEvery call every functions that matches
     takeEvery(actionTypes.AUTH_LOGIN, loginSaga),
     takeEvery(actionTypes.AUTH_SIGNUP, signupSaga),
+    takeEvery(actionTypes.AUTH_USER_FETCH, meSaga),
   ]);
 }

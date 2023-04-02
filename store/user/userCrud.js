@@ -41,3 +41,8 @@ export const searchUser = async (page, limit, searchInput) => {
     `${USER_URL}?search=${searchInput}&page=${page}&limit=${limit}`
   );
 };
+
+// Me
+export const me = async () => {
+  return await axios.get(`${USER_URL}/me`);
+};

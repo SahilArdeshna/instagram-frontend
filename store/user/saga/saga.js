@@ -5,6 +5,7 @@ import { notify } from "../../../utils/toster";
 import * as authActions from "../../auth/actions";
 import * as postActions from "../../posts/actions";
 import * as actionTypes from "../actions/actionTypes";
+import * as authActionTypes from "../../auth/actions/actionTypes";
 import {
   follow,
   getUser,
@@ -18,8 +19,8 @@ import {
 // Follow function
 export function* userFollowSaga(action) {
   try {
-    // Call fetch start to displaying loading spinner
-    yield put(actions.userStart());
+    // // Call fetch start to displaying loading spinner
+    // yield put(actions.userStart());
 
     // Call login axios function
     const result = yield follow(action.followId);
@@ -29,14 +30,17 @@ export function* userFollowSaga(action) {
       throw new Error(result.data.message);
     }
 
-    // Fetch post
-    yield put(postActions.fetchPosts());
+    // Update auth user
+    yield put({ type: authActionTypes.AUTH_USER_FETCH });
+
+    // Fetch user data
+    yield put(actions.fetchUserData(action.userName, false));
 
     // Toster notification
     notify("success", "User followd successfully.");
 
-    // Call fetch success to set loading false
-    yield put(actions.userSuccess());
+    // // Call fetch success to set loading false
+    // yield put(actions.userSuccess());
   } catch (err) {
     console.log(err);
 
@@ -51,8 +55,8 @@ export function* userFollowSaga(action) {
 // Unfollow function
 export function* userUnfollowSaga(action) {
   try {
-    // Call fetch start to displaying loading spinner
-    yield put(actions.userStart());
+    // // Call fetch start to displaying loading spinner
+    // yield put(actions.userStart());
 
     // Call login axios function
     const result = yield unfollow(action.unfollowId);
@@ -62,14 +66,17 @@ export function* userUnfollowSaga(action) {
       throw new Error(result.data.message);
     }
 
-    // Fetch post
-    yield put(postActions.fetchPosts());
+    // Update auth user
+    yield put({ type: authActionTypes.AUTH_USER_FETCH });
+
+    // Fetch user data
+    yield put(actions.fetchUserData(action.userName, false));
 
     // Toster notification
     notify("success", "User unfollowed successfully.");
 
-    // Call fetch success to set loading false
-    yield put(actions.userSuccess());
+    // // Call fetch success to set loading false
+    // yield put(actions.userSuccess());
   } catch (err) {
     console.log(err);
 
@@ -84,8 +91,10 @@ export function* userUnfollowSaga(action) {
 // Fetch user function
 export function* fetchUserSaga(action) {
   try {
-    // Call fetch start to displaying loading spinner
-    yield put(actions.userStart());
+    if (action.showLoading) {
+      // Call fetch start to displaying loading spinner
+      yield put(actions.userStart());
+    }
 
     // Call login axios function
     const result = yield fetchUserData(action.userName);
@@ -98,8 +107,10 @@ export function* fetchUserSaga(action) {
     // Store user data into redux store
     yield put(actions.userDataFetched(result.data));
 
-    // Call fetch success to set loading false
-    yield put(actions.userSuccess());
+    if (action.showLoading) {
+      // Call fetch success to set loading false
+      yield put(actions.userSuccess());
+    }
   } catch (err) {
     console.log(err);
 

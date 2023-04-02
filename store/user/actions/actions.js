@@ -23,26 +23,29 @@ export const userSuccess = () => {
 };
 
 // Follow
-export const follow = (followId) => {
+export const follow = (followId, userName) => {
   return {
     type: actionTypes.USER_FOLLOW,
     followId,
+    userName,
   };
 };
 
 // Unfollow
-export const unfollow = (unfollowId) => {
+export const unfollow = (unfollowId, userName) => {
   return {
     type: actionTypes.USER_UNFOLLOW,
     unfollowId,
+    userName,
   };
 };
 
 // Fetch user data
-export const fetchUserData = (userName) => {
+export const fetchUserData = (userName, showLoading = true) => {
   return {
     type: actionTypes.USER_FETCH,
     userName,
+    showLoading,
   };
 };
 

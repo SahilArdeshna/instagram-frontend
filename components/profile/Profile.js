@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 function Profile(props) {
   const router = useRouter();
   const fileRef = useRef(null);
-  const { user, authUser } = props;
   const { userName } = router.query;
+  const { user, authUser, followUser, unfollowUser } = props;
 
   let profileImage = "/user-img.jpg";
   if (user?.profileImage?.url) {
@@ -76,9 +76,17 @@ function Profile(props) {
             ) : (
               <div className="social-relation">
                 {(authUser?.following || []).includes(user?._id) ? (
-                  <button className="following-profile">Following</button>
+                  <button
+                    className="following-profile"
+                    onClick={() => unfollowUser(user?._id, user?.userName)}
+                  >
+                    Following
+                  </button>
                 ) : (
-                  <button className="follow-profile">
+                  <button
+                    className="follow-profile"
+                    onClick={() => followUser(user?._id, user?.userName)}
+                  >
                     {(authUser?.followers || []).includes(user?._id)
                       ? "Follow Back"
                       : "Follow"}

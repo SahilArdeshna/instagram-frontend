@@ -1,12 +1,15 @@
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
+import SocialModal from "../modal/SocialModal";
 
 function Profile(props) {
   const router = useRouter();
   const fileRef = useRef(null);
   const { userName } = router.query;
   const { user, authUser, followUser, unfollowUser } = props;
+
+  const [showModal, setShowModal] = useState({ show: false, type: "" });
 
   let profileImage = "/user-img.jpg";
   if (user?.profileImage?.url) {
@@ -19,6 +22,10 @@ function Profile(props) {
 
   const onBtnClick = () => {
     fileRef.current.click();
+  };
+
+  const closeModal = () => {
+    setShowModal({ ...showModal, show: false });
   };
 
   return (
@@ -54,7 +61,7 @@ function Profile(props) {
                 <Link passHref href="/accounts/edit">
                   <a className="edit-profile">Edit Profile</a>
                 </Link>
-                <div className="setting">
+                {/* <div className="setting">
                   <button>
                     <svg
                       aria-label="Options"
@@ -71,7 +78,7 @@ function Profile(props) {
                       ></path>
                     </svg>
                   </button>
-                </div>
+                </div> */}
               </div>
             ) : (
               <div className="social-relation">
@@ -102,15 +109,19 @@ function Profile(props) {
               </span>
             </li>
             <li>
-              <span onClick={() => {}}>
+              <span
+                onClick={() => setShowModal({ show: true, type: "Followers" })}
+              >
                 <span className="count">{user?.followers?.length}</span>{" "}
-                followers
+                <span className="follower-link">followers</span>
               </span>
             </li>
             <li>
-              <span onClick={() => {}}>
+              <span
+                onClick={() => setShowModal({ show: true, type: "Following" })}
+              >
                 <span className="count">{user?.following?.length}</span>{" "}
-                following
+                <span className="following-link">following</span>
               </span>
             </li>
           </ul>
@@ -123,6 +134,17 @@ function Profile(props) {
           </div>
         </div>
       </header>
+
+      <SocialModal
+        authUser={authUser}
+        showModal={showModal}
+        closeModal={closeModal}
+        followUser={followUser}
+        unfollowUser={unfollowUser}
+        users={
+          showModal.type === "Following" ? user?.following : user?.followers
+        }
+      />
     </div>
   );
 }

@@ -33,8 +33,10 @@ export function* userFollowSaga(action) {
     // Update auth user
     yield put({ type: authActionTypes.AUTH_USER_FETCH });
 
-    // Fetch user data
-    yield put(actions.fetchUserData(action.userName, false));
+    if (action.userName) {
+      // Fetch user data
+      yield put(actions.fetchUserData(action.userName, false));
+    }
 
     // Toster notification
     notify("success", "User followd successfully.");
@@ -69,8 +71,10 @@ export function* userUnfollowSaga(action) {
     // Update auth user
     yield put({ type: authActionTypes.AUTH_USER_FETCH });
 
-    // Fetch user data
-    yield put(actions.fetchUserData(action.userName, false));
+    if (action.userName) {
+      // Fetch user data
+      yield put(actions.fetchUserData(action.userName, false));
+    }
 
     // Toster notification
     notify("success", "User unfollowed successfully.");

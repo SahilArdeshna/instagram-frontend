@@ -362,6 +362,7 @@ nav {
 
           .home-div {
             cursor: pointer;
+            justify-content: center;
 
             .home {
               .home-svg {
@@ -1007,6 +1008,7 @@ nav {
 
     img {
       cursor: pointer;
+      border-radius: 50%;
     }
   }
 
@@ -1358,6 +1360,12 @@ hr {
           .count {
             color: var(--font-black);
             font-weight: 600;
+          }
+
+          .follower-link,
+          .following-link {
+            cursor: pointer;
+            color: var(--link-color);
           }
         }
       }

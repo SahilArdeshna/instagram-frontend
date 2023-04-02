@@ -34,7 +34,9 @@ const UserInfo = ({
       </div>
       <div className="user-name-div">
         <div className="username">
-          <Link href={`/${userName}`}>{userName}</Link>
+          <Link href={`/${userName}`}>
+            <span>{userName}</span>
+          </Link>
         </div>
         <div className="fullname">{fullName}</div>
       </div>

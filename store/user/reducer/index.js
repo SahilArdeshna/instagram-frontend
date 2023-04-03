@@ -16,6 +16,12 @@ const initialState = {
     limit: 50,
     isSearching: false,
   },
+  socialStats: {
+    userId: null,
+    following: [],
+    followers: [],
+    isLoading: false,
+  },
   isImageProcessing: false,
 };
 
@@ -79,6 +85,14 @@ export const userReducer = (state = initialState, action) => {
           isSearching: true,
         },
       };
+    case actionTypes.USER_SEARCH_FAILED:
+      return {
+        ...state,
+        search: {
+          ...state.search,
+          isSearching: false,
+        },
+      };
     case actionTypes.USER_SEARCH_SUCCESS:
       return {
         ...state,
@@ -86,6 +100,32 @@ export const userReducer = (state = initialState, action) => {
           ...state.search,
           isSearching: false,
           users: action.users,
+        },
+      };
+    case actionTypes.USER_SOCIAL_STATS_START:
+      return {
+        ...state,
+        socialStats: {
+          ...state.socialStats,
+          isSearching: true,
+        },
+      };
+    case actionTypes.USER_SOCIAL_STATS_FAILD:
+      return {
+        ...state,
+        socialStats: {
+          ...state.socialStats,
+          isSearching: false,
+        },
+      };
+    case actionTypes.USER_SOCIAL_STATS_UPDATE:
+      return {
+        ...state,
+        socialStats: {
+          ...state.socialStats,
+          isSearching: false,
+          userId: action.userId,
+          [action.type]: action.stats,
         },
       };
     default:

@@ -111,3 +111,12 @@ export const searchUserGlobal = (page, limit, searchInput) => {
     searchInput,
   };
 };
+
+// Social stats
+export const socialStats = (userId, type) => {
+  return {
+    type: actionTypes.USER_SOCIAL_STATS,
+    userId,
+    type,
+  };
+};

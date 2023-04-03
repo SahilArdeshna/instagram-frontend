@@ -1,17 +1,15 @@
 import { isEmpty } from "lodash";
+import { connect } from "react-redux";
 import { Modal, Container, Row } from "react-bootstrap";
 
 import CloseIcon from "../../icons/CloseIcon";
 import UserInfo from "../../widgets/UserInfo";
+import * as userAction from "../../store/user/actions";
 
-function SocialModal({
-  authUser,
-  showModal,
-  users = [],
-  followUser,
-  closeModal,
-  unfollowUser,
-}) {
+function SocialModal(props) {
+  const { authUser, socialStats, getSocialStats } = props;
+  const { userId, isLoading } = socialStats;
+
   return (
     <Modal centered onHide={closeModal} show={showModal.show}>
       <Modal.Body>
@@ -67,4 +65,19 @@ function SocialModal({
   );
 }
 
-export default SocialModal;
+const mapStateToProps = (state) => {
+  return {
+    authUser: state.auth.user,
+    socialStats: state.user.socialStats,
+  };
+};
+
+// Map dispatch to props
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSocialStats: (userId, type) =>
+      dispatch(userAction.socialStats(userId, type)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SocialModal);

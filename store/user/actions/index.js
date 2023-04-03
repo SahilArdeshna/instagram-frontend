@@ -5,6 +5,7 @@ export {
   userFaild,
   userStart,
   userSuccess,
+  socialStats,
   fetchUserData,
   userDataFetched,
   searchUserGlobal,

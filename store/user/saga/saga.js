@@ -3,7 +3,6 @@ import { put } from "redux-saga/effects";
 import * as actions from "../actions";
 import { notify } from "../../../utils/toster";
 import * as authActions from "../../auth/actions";
-import * as postActions from "../../posts/actions";
 import * as actionTypes from "../actions/actionTypes";
 import * as authActionTypes from "../../auth/actions/actionTypes";
 import {
@@ -11,6 +10,7 @@ import {
   getUser,
   unfollow,
   searchUser,
+  socialStats,
   fetchUserData,
   uploadProfileImage,
   deleteProfileImage,
@@ -216,6 +216,37 @@ export function* searchUserGlobalSaga(action) {
       users: result.data || [],
     });
   } catch (err) {
+    console.log(err);
+
+    // Toster notification
+    notify("error", err?.response?.data?.message);
+
+    yield put({ type: actionTypes.USER_SEARCH_FAILED });
+  }
+}
+
+// Social stats
+export function* socialStatsSaga(action) {
+  try {
+    // Call fetch start to displaying loading spinner
+    yield put({ type: actionTypes.USER_SOCIAL_STATS_START });
+
+    // Call social stats axios function
+    const result = yield socialStats(action.userId, action.type);
+
+    // If response error found throw error
+    if (result.data && result.data.statusCode === 400) {
+      throw new Error(result.data.message);
+    }
+
+    // Call fetch success to set loading false
+    yield put({
+      type: actionTypes.USER_SOCIAL_STATS_UPDATE,
+      userId: action.userId,
+      type: action.type,
+      stats: result.data[action.type],
+    });
+  } catch (error) {
     console.log(err);
 
     // Toster notification

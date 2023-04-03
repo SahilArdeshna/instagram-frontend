@@ -46,3 +46,8 @@ export const searchUser = async (page, limit, searchInput) => {
 export const me = async () => {
   return await axios.get(`${USER_URL}/me`);
 };
+
+// Social stats
+export const socialStats = async (userId, type) => {
+  return await axios.get(`${USER_URL}/${userId}/social-stats?type=${type}`);
+};

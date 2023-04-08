@@ -58,12 +58,7 @@ const User = (props) => {
   return (
     <HomeLayout>
       <div className="user-container">
-        <Profile
-          user={user}
-          authUser={authUser}
-          followUser={followUser}
-          unfollowUser={unfollowUser}
-        />
+        <Profile />
         <Tags userName={userName} />
         <PostsContainer posts={user?.posts} />
       </div>

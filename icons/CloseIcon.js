@@ -1,7 +1,7 @@
 const CloseIcon = () => {
   return (
     <svg
-      ariaLabel="Close"
+      aria-label="Close"
       className="x1lliihq x1n2onr6"
       color="rgb(38, 38, 38)"
       fill="rgb(38, 38, 38)"

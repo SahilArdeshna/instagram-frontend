@@ -93,3 +93,20 @@ export const updateExit = (exit) => {
     exit,
   };
 };
+
+// Social stats modal open
+export const openSocialStatsModal = (userId, type, stats) => {
+  return {
+    type: actionTypes.MODAL_SOCIAL_STATS_OPEN,
+    actionType: type,
+    userId: userId,
+    stats: stats[type],
+  };
+};
+
+// Social stats modal close
+export const closeSocialStatsModal = () => {
+  return {
+    type: actionTypes.MODAL_SOCIAL_STATS_CLOSE,
+  };
+};

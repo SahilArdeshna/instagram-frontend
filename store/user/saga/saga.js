@@ -3,8 +3,11 @@ import { put } from "redux-saga/effects";
 import * as actions from "../actions";
 import { notify } from "../../../utils/toster";
 import * as authActions from "../../auth/actions";
+import * as modalActions from "../../modal/actions";
 import * as actionTypes from "../actions/actionTypes";
+import * as userActionTypes from "../../user/actions/actionTypes";
 import * as authActionTypes from "../../auth/actions/actionTypes";
+import * as modalActionTypes from "../../modal/actions/actionTypes";
 import {
   follow,
   getUser,
@@ -19,8 +22,8 @@ import {
 // Follow function
 export function* userFollowSaga(action) {
   try {
-    // // Call fetch start to displaying loading spinner
-    // yield put(actions.userStart());
+    // Call fetch start to displaying loading spinner
+    yield put({ type: userActionTypes.USER_FOLLOW_UNFOLLOW_START });
 
     // Call login axios function
     const result = yield follow(action.followId);
@@ -39,10 +42,7 @@ export function* userFollowSaga(action) {
     }
 
     // Toster notification
-    notify("success", "User followd successfully.");
-
-    // // Call fetch success to set loading false
-    // yield put(actions.userSuccess());
+    notify("success", "User followed successfully.");
   } catch (err) {
     console.log(err);
 
@@ -51,14 +51,16 @@ export function* userFollowSaga(action) {
 
     // Call fetch faild to store error message in state
     yield put(actions.userFaild(err?.response?.data));
+  } finally {
+    yield put({ type: userActionTypes.USER_FOLLOW_UNFOLLOW_UPDATED });
   }
 }
 
 // Unfollow function
 export function* userUnfollowSaga(action) {
   try {
-    // // Call fetch start to displaying loading spinner
-    // yield put(actions.userStart());
+    // Call fetch start to displaying loading spinner
+    yield put({ type: userActionTypes.USER_FOLLOW_UNFOLLOW_START });
 
     // Call login axios function
     const result = yield unfollow(action.unfollowId);
@@ -78,9 +80,6 @@ export function* userUnfollowSaga(action) {
 
     // Toster notification
     notify("success", "User unfollowed successfully.");
-
-    // // Call fetch success to set loading false
-    // yield put(actions.userSuccess());
   } catch (err) {
     console.log(err);
 
@@ -89,6 +88,8 @@ export function* userUnfollowSaga(action) {
 
     // Call fetch faild to store error message in state
     yield put(actions.userFaild(err?.response?.data));
+  } finally {
+    yield put({ type: userActionTypes.USER_FOLLOW_UNFOLLOW_UPDATED });
   }
 }
 
@@ -181,6 +182,7 @@ export function* deleteProfileImageSaga(action) {
 
     // Call fetch success to set loading false
     yield put(actions.userProfileUploadSuccess());
+    ariaLabel;
   } catch (err) {
     console.log(err);
 
@@ -229,10 +231,10 @@ export function* searchUserGlobalSaga(action) {
 export function* socialStatsSaga(action) {
   try {
     // Call fetch start to displaying loading spinner
-    yield put({ type: actionTypes.USER_SOCIAL_STATS_START });
+    yield put({ type: modalActionTypes.MODAL_SOCIAL_STATS_START });
 
     // Call social stats axios function
-    const result = yield socialStats(action.userId, action.type);
+    const result = yield socialStats(action.userId, action.actionType);
 
     // If response error found throw error
     if (result.data && result.data.statusCode === 400) {
@@ -240,16 +242,19 @@ export function* socialStatsSaga(action) {
     }
 
     // Call fetch success to set loading false
-    yield put({
-      type: actionTypes.USER_SOCIAL_STATS_UPDATE,
-      userId: action.userId,
-      type: action.type,
-      stats: result.data[action.type],
-    });
-  } catch (error) {
+    yield put(
+      modalActions.openSocialStatsModal(
+        action.userId,
+        action.actionType,
+        result.data
+      )
+    );
+  } catch (err) {
     console.log(err);
 
     // Toster notification
     notify("error", err?.response?.data?.message);
+
+    yield put({ type: modalActionTypes.MODAL_SOCIAL_STATS_FAILD });
   }
 }

@@ -25,6 +25,14 @@ const initialState = {
     show: false,
     discard: false,
   },
+  socialStats: {
+    show: false,
+    userId: null,
+    following: [],
+    followers: [],
+    actionType: "",
+    isLoading: false,
+  },
 };
 
 // Reducer function
@@ -128,6 +136,42 @@ export const modalReducer = (state = initialState, action) => {
         createModal: {
           ...state.createModal,
           exit: action.exit,
+        },
+      };
+    case actionTypes.MODAL_SOCIAL_STATS_START:
+      return {
+        ...state,
+        socialStats: {
+          ...state.socialStats,
+          isLoading: true,
+        },
+      };
+    case actionTypes.MODAL_SOCIAL_STATS_OPEN:
+      return {
+        ...state,
+        socialStats: {
+          ...state.socialStats,
+          show: true,
+          isLoading: false,
+          userId: action.userId,
+          actionType: action.actionType,
+          [action.actionType]: action.stats,
+        },
+      };
+    case actionTypes.MODAL_SOCIAL_STATS_CLOSE:
+      return {
+        ...state,
+        socialStats: {
+          ...state.socialStats,
+          show: false,
+        },
+      };
+    case actionTypes.MODAL_SOCIAL_STATS_FAILD:
+      return {
+        ...state,
+        socialStats: {
+          ...state.socialStats,
+          isLoading: false,
         },
       };
     default:

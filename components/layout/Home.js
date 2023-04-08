@@ -5,6 +5,7 @@ import Footer from "../footer";
 import Navbar from "../navbar/Navbar";
 import ActionModal from "../modal/Action";
 import PostUpload from "../modal/PostUpload";
+import SocialModal from "../modal/SocialModal";
 import DiscardModal from "../modal/DiscardModal";
 import DeleteAndUnfollow from "../modal/DeleteAndUnfollow";
 
@@ -71,6 +72,9 @@ function HomeLayout(props) {
 
       {/* discard modal */}
       <DiscardModal />
+
+      {/* social stats modal */}
+      <SocialModal />
     </section>
   );
 }

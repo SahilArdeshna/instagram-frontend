@@ -22,6 +22,7 @@ const initialState = {
     followers: [],
     isLoading: false,
   },
+  socialLoader: false,
   isImageProcessing: false,
 };
 
@@ -107,7 +108,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         socialStats: {
           ...state.socialStats,
-          isSearching: true,
+          isLoading: true,
         },
       };
     case actionTypes.USER_SOCIAL_STATS_FAILD:
@@ -115,7 +116,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         socialStats: {
           ...state.socialStats,
-          isSearching: false,
+          isLoading: false,
         },
       };
     case actionTypes.USER_SOCIAL_STATS_UPDATE:
@@ -123,10 +124,20 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         socialStats: {
           ...state.socialStats,
-          isSearching: false,
+          isLoading: false,
           userId: action.userId,
           [action.type]: action.stats,
         },
+      };
+    case actionTypes.USER_FOLLOW_UNFOLLOW_START:
+      return {
+        ...state,
+        socialLoader: true,
+      };
+    case actionTypes.USER_FOLLOW_UNFOLLOW_UPDATED:
+      return {
+        ...state,
+        socialLoader: false,
       };
     default:
       return state;

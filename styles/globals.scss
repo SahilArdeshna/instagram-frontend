@@ -1362,10 +1362,14 @@ hr {
             font-weight: 600;
           }
 
-          .follower-link,
-          .following-link {
+          .social-link {
             cursor: pointer;
-            color: var(--link-color);
+            user-select: none;
+
+            .follower-link,
+            .following-link {
+              color: var(--primary-text);
+            }
           }
         }
       }
@@ -1806,6 +1810,7 @@ hr {
   img {
     width: 90px;
     height: 90px;
+    border-radius: 50%;
   }
 }
 
@@ -2238,5 +2243,97 @@ hr {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+.social-modal-header {
+  width: 100%;
+  height: 44px;
+  position: relative;
+  border-bottom: 1px solid var(--secondary-button-hover);
+
+  .text {
+    flex-grow: 1;
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
+    color: var(--black);
+    flex-direction: column;
+    justify-content: center;
+    vertical-align: baseline;
+  }
+
+  .close-button {
+    top: 0;
+    right: 0;
+    display: flex;
+    padding-top: 5px;
+    position: absolute;
+    padding-right: 8px;
+
+    button {
+      padding: 8px;
+      border: none;
+      display: flex;
+      cursor: pointer;
+      align-items: center;
+      background: transparent;
+      justify-content: center;
+    }
+  }
+}
+
+.modal-size {
+  width: 400px;
+}
+
+.social-modal-content {
+  padding: 0 !important;
+
+  .users-list {
+    .user-info {
+      display: flex;
+      padding: 8px 16px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      button {
+        box-sizing: border-box;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 7px 16px !important;
+        pointer-events: auto;
+        text-overflow: ellipsis;
+        text-transform: inherit;
+        width: auto;
+        border: none;
+        border-radius: 8px;
+        text-align: center;
+        min-height: 32px;
+        line-height: 18px;
+
+        .profile-loader {
+          height: 18px !important;
+          position: relative !important;
+          align-items: center !important;
+        }
+      }
+
+      .following-profile {
+        min-width: 105.33px;
+        color: var(--black);
+        background-color: var(--secondary-button-bg);
+      }
+
+      .follow-profile {
+        min-width: 84.33px;
+        color: var(--white);
+        background-color: var(--primary-button);
+      }
+    }
   }
 }

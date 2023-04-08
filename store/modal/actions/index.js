@@ -12,4 +12,6 @@ export {
   openUnfollowModal,
   closeSettingMadal,
   closeUnfollowModal,
+  openSocialStatsModal,
+  closeSocialStatsModal,
 } from "./actions";

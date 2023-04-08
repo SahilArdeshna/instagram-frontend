@@ -1,15 +1,16 @@
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { connect } from "react-redux";
 import { useRouter } from "next/router";
-import SocialModal from "../modal/SocialModal";
+
+import * as userActions from "../../store/user/actions";
+import * as modalActions from "../../store/modal/actions";
 
 function Profile(props) {
   const router = useRouter();
   const fileRef = useRef(null);
   const { userName } = router.query;
-  const { user, authUser, followUser, unfollowUser } = props;
-
-  const [showModal, setShowModal] = useState({ show: false, type: "" });
+  const { user, authUser, showStats, followUser, unfollowUser } = props;
 
   let profileImage = "/user-img.jpg";
   if (user?.profileImage?.url) {
@@ -22,10 +23,6 @@ function Profile(props) {
 
   const onBtnClick = () => {
     fileRef.current.click();
-  };
-
-  const closeModal = () => {
-    setShowModal({ ...showModal, show: false });
   };
 
   return (
@@ -110,7 +107,8 @@ function Profile(props) {
             </li>
             <li>
               <span
-                onClick={() => setShowModal({ show: true, type: "Followers" })}
+                className="social-link"
+                onClick={() => showStats(user?._id, "followers")}
               >
                 <span className="count">{user?.followers?.length}</span>{" "}
                 <span className="follower-link">followers</span>
@@ -118,7 +116,8 @@ function Profile(props) {
             </li>
             <li>
               <span
-                onClick={() => setShowModal({ show: true, type: "Following" })}
+                className="social-link"
+                onClick={() => showStats(user?._id, "following")}
               >
                 <span className="count">{user?.following?.length}</span>{" "}
                 <span className="following-link">following</span>
@@ -134,19 +133,32 @@ function Profile(props) {
           </div>
         </div>
       </header>
-
-      <SocialModal
-        authUser={authUser}
-        showModal={showModal}
-        closeModal={closeModal}
-        followUser={followUser}
-        unfollowUser={unfollowUser}
-        users={
-          showModal.type === "Following" ? user?.following : user?.followers
-        }
-      />
     </div>
   );
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+    error: state.user.error,
+    authUser: state.auth.user,
+    isAuth: state.auth.isAuth,
+    loading: state.user.loading,
+  };
+};
+
+// Map dispatch to props
+const mapDispatchToProps = (dispatch) => {
+  return {
+    initState: () => dispatch(userActions.userInit()),
+    fetchUserData: (userName) => dispatch(userActions.fetchUserData(userName)),
+    followUser: (userId, userName) =>
+      dispatch(userActions.follow(userId, userName)),
+    unfollowUser: (userId, userName) =>
+      dispatch(userActions.unfollow(userId, userName)),
+    showStats: (userId, type) =>
+      dispatch(userActions.socialStats(userId, type)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

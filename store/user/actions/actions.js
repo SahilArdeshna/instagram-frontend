@@ -117,6 +117,6 @@ export const socialStats = (userId, type) => {
   return {
     type: actionTypes.USER_SOCIAL_STATS,
     userId,
-    type,
+    actionType: type,
   };
 };

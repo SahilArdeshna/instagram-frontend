@@ -40,7 +40,7 @@ const Login = ({
                   }
                 />
               </div>
-              <div>
+              <div className="mt-2">
                 <FormInput
                   name="password"
                   type={toggle ? "text" : "password"}
@@ -60,7 +60,7 @@ const Login = ({
                   //   }
                 />
               </div>
-              <div className="submit">
+              <div className="submit mt-3">
                 <Button type="submit" block={true} disabled={!!submitting}>
                   {!submitting && <span>{labels?.login || "Login"}</span>}
                   {submitting && (

@@ -43,7 +43,7 @@ function Signup(props) {
                       )}
                     </Field>
                   </div>
-                  <div className="form-group">
+                  <div className="form-group mt-2">
                     <Field name="fullName" type="text">
                       {({ input, meta }) => (
                         <Input
@@ -57,7 +57,7 @@ function Signup(props) {
                       )}
                     </Field>
                   </div>
-                  <div className="form-group">
+                  <div className="form-group mt-2">
                     <Field name="userName" type="text">
                       {({ input, meta }) => (
                         <Input
@@ -71,7 +71,7 @@ function Signup(props) {
                       )}
                     </Field>
                   </div>
-                  <div className="form-group">
+                  <div className="form-group mt-2">
                     <Field name="password" type="password">
                       {({ input, meta }) => (
                         <Input

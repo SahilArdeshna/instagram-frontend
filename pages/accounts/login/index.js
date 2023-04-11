@@ -40,7 +40,10 @@ function Login(props) {
             <LoginForm
               togglePassword={true}
               onSubmit={onSubmitHandler}
-              labels={{ username: "", password: "", login: "Sign in" }}
+              labels={{
+                login: "Sign in",
+                placeholders: { username: "Username", password: "Password" },
+              }}
               schema={loginSchema}
             />
           </div>

@@ -12,6 +12,7 @@ import * as modalActions from "../../store/modal/actions";
 function SocialModal(props) {
   const {
     authUser,
+    viewUser,
     closeModal,
     followUser,
     socialStats,
@@ -23,7 +24,7 @@ function SocialModal(props) {
 
   const socialData = useMemo(() => {
     return actionType === "followers" ? followers : following;
-  }, [actionType]);
+  }, [actionType, userId, followers, following]);
 
   return (
     <Modal centered onHide={closeModal} show={show}>
@@ -42,53 +43,71 @@ function SocialModal(props) {
           <Row className="social-modal-content">
             {!isEmpty(socialData) ? (
               <div className="users-list">
-                {socialData.map((user) => (
-                  <div key={user?._id} className="user-info">
-                    <UserInfo
-                      width="44"
-                      height="44"
-                      global={true}
-                      fullName={user?.fullName}
-                      userName={user?.userName}
-                      profileImage={user?.profileImage?.url}
-                    />
-                    <div className="social-relation">
-                      {(authUser?.following || []).includes(user?._id) ? (
-                        <button
-                          disabled={socialLoader}
-                          className="following-profile"
-                          onClick={() => openUnfollowModal(user)}
-                        >
-                          {socialLoader ? (
-                            <div className="profile-loader">
-                              <Loader />
-                            </div>
-                          ) : (
-                            "Following"
-                          )}
-                        </button>
-                      ) : (
-                        <button
-                          disabled={socialLoader}
-                          className="follow-profile"
-                          onClick={() => followUser(user?._id)}
-                        >
-                          {socialLoader ? (
-                            <div className="profile-loader">
-                              <Loader />
-                            </div>
-                          ) : (authUser?.followers || []).includes(
-                              user?._id
-                            ) ? (
-                            "Follow Back"
-                          ) : (
-                            "Follow"
-                          )}
-                        </button>
-                      )}
+                {socialData.map((user) => {
+                  const isFollowing = (authUser?.following || []).includes(
+                    user?._id
+                  );
+                  const isFollower = (authUser?.followers || []).includes(
+                    user?._id
+                  );
+                  const isAuthUser = authUser?._id === user?._id;
+
+                  return (
+                    <div key={user?._id} className="user-info">
+                      <UserInfo
+                        width="44"
+                        height="44"
+                        global={true}
+                        onClick={closeModal}
+                        fullName={user?.fullName}
+                        userName={user?.userName}
+                        profileImage={user?.profileImage?.url}
+                      />
+                      <div className="social-relation">
+                        {isFollowing && !isAuthUser ? (
+                          <button
+                            disabled={socialLoader}
+                            className="following-profile"
+                            onClick={() => openUnfollowModal(user)}
+                          >
+                            {socialLoader ? (
+                              <div className="profile-loader">
+                                <Loader />
+                              </div>
+                            ) : (
+                              "Following"
+                            )}
+                          </button>
+                        ) : isFollower && !isAuthUser ? (
+                          <button
+                            disabled={socialLoader}
+                            className="follow-profile"
+                            onClick={() =>
+                              followUser(
+                                user?._id,
+                                viewUser?.userName === authUser?.userName
+                                  ? viewUser.userName
+                                  : ""
+                              )
+                            }
+                          >
+                            {socialLoader ? (
+                              <div className="profile-loader">
+                                <Loader />
+                              </div>
+                            ) : (authUser?.followers || []).includes(
+                                user?._id
+                              ) ? (
+                              "Follow Back"
+                            ) : (
+                              "Follow"
+                            )}
+                          </button>
+                        ) : null}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div style={{ padding: "10px" }}>No user data!</div>
@@ -103,6 +122,7 @@ function SocialModal(props) {
 const mapStateToProps = (state) => {
   return {
     authUser: state.auth.user,
+    viewUser: state.user.user,
     socialStats: state.modal.socialStats,
     socialLoader: state.user.socialLoader,
   };

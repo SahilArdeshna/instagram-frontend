@@ -9,6 +9,8 @@ function DeleteAndUnfollow(props) {
   const {
     postId,
     author,
+    authUser,
+    viewUser,
     unfollow,
     deletePost,
     showDeleteModal,
@@ -48,7 +50,10 @@ function DeleteAndUnfollow(props) {
     closeModal();
 
     // Call unfollow function
-    unfollow(author?._id);
+    unfollow(
+      author?._id,
+      viewUser?.userName === authUser?.userName ? viewUser.userName : ""
+    );
   };
 
   return (
@@ -100,7 +105,8 @@ function DeleteAndUnfollow(props) {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth.user,
+    authUser: state.auth.user,
+    viewUser: state.user.user,
     postId: state.modal.deleteModal.postId,
     author: state.modal.unfollowModal.author,
     showDeleteModal: state.modal.deleteModal.show,

@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 const UserInfo = ({
   global,
+  onClick,
   userName,
   fullName,
   profileImage,
@@ -13,6 +14,7 @@ const UserInfo = ({
 
   const profileClickHandler = () => {
     if (!global) return;
+    if (onClick) onClick();
     router.push(`/${userName}`);
   };
 

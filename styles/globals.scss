@@ -151,7 +151,10 @@ div:not(
     .modal-backdrop,
     .post-header,
     .profile-image-div,
-    .restricted-div
+    .restricted-div,
+    .social-container,
+    .time-stamp,
+    .author-username
   ),
 footer,
 header,
@@ -839,39 +842,6 @@ nav {
               user-select: none;
               width: 100%;
               object-fit: cover;
-            }
-          }
-        }
-
-        .social-container {
-          padding: 6px 12px;
-
-          .social-icon {
-            width: max-content;
-            // height: 24px;
-            padding: 4px 4px 8px 4px;
-
-            .social {
-              animation-duration: 0.45s;
-              animation-name: like-button-animation;
-              animation-timing-function: ease-in-out;
-              transform: scale(1);
-              cursor: pointer;
-            }
-
-            .social-hover:hover {
-              fill: gray;
-            }
-          }
-
-          .social-stats {
-            padding: 4px 4px 0px;
-
-            .likes {
-              gap: 5px;
-              display: flex;
-              font-weight: bold;
-              flex-direction: row;
             }
           }
         }
@@ -1664,7 +1634,7 @@ hr {
             left: 0;
             overflow-y: scroll;
             padding: 16px 12px;
-            position: absolute;
+            // position: absolute;
             width: calc(100% - 8px);
 
             li {
@@ -1682,9 +1652,14 @@ hr {
                 display: flex;
                 flex-direction: row;
                 width: calc(100% - 28px);
+                align-items: center;
 
-                .author-image {
-                  margin-right: 13px;
+                .author {
+                  display: block;
+
+                  .author-image {
+                    margin-right: 13px;
+                  }
                 }
 
                 .post-info {
@@ -1692,32 +1667,34 @@ hr {
                   flex-shrink: 1;
                   min-width: 0;
                   flex-wrap: wrap;
-                  flex-direction: row;
+                  flex-direction: column;
 
-                  h2 {
-                    margin: 0;
-                    padding: 0;
-                    border: 0;
-                    font: inherit;
-                    vertical-align: baseline;
+                  .info {
+                    display: inline-block;
 
-                    .author-username {
-                      margin-right: 4px;
+                    h2 {
+                      margin: 0;
+                      padding: 0;
+                      border: 0;
+                      font: inherit;
+                      display: inline-flex;
+
+                      .author-username {
+                        margin-right: 4px;
+                      }
                     }
                   }
 
-                  .time-stamp {
-                    margin-top: 16px;
-                    display: block;
-                    color: var(--color-8e8e8e);
-                    cursor: default;
-                    font-size: 12px;
-                    font-weight: 400;
-                    line-height: 14px;
+                  .time {
+                    margin-top: 8px;
                   }
                 }
               }
             }
+          }
+
+          .social {
+            border-top: 1px solid var(--color-efefef);
           }
         }
       }
@@ -2336,4 +2313,44 @@ hr {
       }
     }
   }
+}
+
+.social-container {
+  padding: 6px 12px;
+
+  .social-icon {
+    width: max-content;
+    // height: 24px;
+    padding: 4px 4px 8px 4px;
+
+    .social {
+      animation-duration: 0.45s;
+      animation-name: like-button-animation;
+      animation-timing-function: ease-in-out;
+      transform: scale(1);
+      cursor: pointer;
+    }
+
+    .social-hover:hover {
+      fill: gray;
+    }
+  }
+
+  .social-stats {
+    padding: 4px 4px 0px;
+
+    .likes {
+      gap: 5px;
+      display: flex;
+      font-weight: bold;
+      flex-direction: row;
+    }
+  }
+}
+
+.time-stamp {
+  font-size: 12px;
+  padding-left: 4px;
+  line-height: 14px;
+  color: var(--color-8e8e8e);
 }

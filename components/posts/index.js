@@ -3,11 +3,10 @@ import Link from "next/link";
 import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 
-import LikeIcon from "../../icons/LikeIcon";
-import UnlikeIcon from "../../icons/UnlikeIcon";
 import ActionButton from "../button/ActionButton";
 import * as postActions from "../../store/posts/actions";
 import * as modalActions from "../../store/modal/actions";
+import SocialContainer from "../../widgets/SocialContainer";
 
 function Posts(props) {
   const { posts, user, postLike, postUnlike, openModal } = props;
@@ -87,30 +86,13 @@ function Posts(props) {
             </div>
           </div>
         </div>
-        <div className="social-container">
-          <div className="social-icon">
-            {isLiked ? (
-              <span
-                className="social"
-                onClick={() => unlikeClickHandler(post._id)}
-              >
-                <UnlikeIcon />
-              </span>
-            ) : (
-              <span
-                className="social social-hover"
-                onClick={() => likeClickHandler(post._id)}
-              >
-                <LikeIcon />
-              </span>
-            )}
-          </div>
-          <div className="social-stats">
-            <div className="likes">
-              {post?.likes ? post.likes.length : 0} <span>likes</span>
-            </div>
-          </div>
-        </div>
+        <SocialContainer
+          isLiked={isLiked}
+          postId={post._id}
+          likes={post.likes}
+          likeClickHandler={likeClickHandler}
+          unlikeClickHandler={unlikeClickHandler}
+        />
         <div className="post-detail">
           <div className="detail-container">
             <div className="detail-div">

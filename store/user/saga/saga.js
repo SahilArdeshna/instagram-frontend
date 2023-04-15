@@ -182,7 +182,6 @@ export function* deleteProfileImageSaga(action) {
 
     // Call fetch success to set loading false
     yield put(actions.userProfileUploadSuccess());
-    ariaLabel;
   } catch (err) {
     console.log(err);
 

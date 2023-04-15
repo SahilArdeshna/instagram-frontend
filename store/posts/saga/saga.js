@@ -153,8 +153,13 @@ export function* postLikeSaga(action) {
       throw new Error(result?.data?.message);
     }
 
-    // Store post data into store
-    yield put(actions.fetchPosts());
+    // Update post data
+    if (action.updatePost) {
+      yield put({ type: actionTypes.POST_FETCHED, post: result.data.post });
+    } else {
+      // Store post data into store
+      yield put(actions.fetchPosts());
+    }
   } catch (error) {
     console.log(err);
 
@@ -174,8 +179,13 @@ export function* postUnlikeSaga(action) {
       throw new Error(result?.data?.message);
     }
 
-    // Store post data into store
-    yield put(actions.fetchPosts());
+    // Update post data
+    if (action.updatePost) {
+      yield put({ type: actionTypes.POST_FETCHED, post: result.data.post });
+    } else {
+      // Store post data into store
+      yield put(actions.fetchPosts());
+    }
   } catch (error) {
     console.log(err);
 

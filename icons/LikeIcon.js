@@ -1,7 +1,7 @@
 const LikeIcon = () => {
   return (
     <svg
-      ariaLabel="Like"
+      aria-label="Like"
       className="x1lliihq x1n2onr6"
       fill="inherit"
       height="24"

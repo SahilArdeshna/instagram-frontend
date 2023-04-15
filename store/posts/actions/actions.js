@@ -85,17 +85,19 @@ export const updateCreatePostLoading = (data) => {
 };
 
 // Post like
-export const postLike = (postId) => {
+export const postLike = (postId, updatePost) => {
   return {
     type: actionTypes.POST_LIKE,
     postId,
+    updatePost,
   };
 };
 
 // Post unlike
-export const postUnlike = (postId) => {
+export const postUnlike = (postId, updatePost) => {
   return {
     type: actionTypes.POST_UNLIKE,
     postId,
+    updatePost,
   };
 };

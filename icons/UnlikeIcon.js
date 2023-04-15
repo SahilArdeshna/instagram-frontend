@@ -1,7 +1,7 @@
 const UnlikeIcon = () => {
   return (
     <svg
-      ariaLabel="Unlike"
+      aria-label="Unlike"
       className="x1lliihq x1n2onr6"
       color="rgb(255, 48, 64)"
       fill="rgb(255, 48, 64)"

@@ -201,8 +201,12 @@ nav {
     border-bottom: 1px solid var(--border-color);
 
     .nav-container {
+      @media (min-width: 640px) {
+        padding: 0 20px;
+      }
+
       height: 54px;
-      padding: 0 20px;
+      padding: 0 10px;
       transition: height 0.2s ease-in-out;
       width: 100%;
       justify-content: center;
@@ -237,11 +241,19 @@ nav {
       }
 
       .search-container {
+        @media (max-width: 640px) {
+          width: 30%;
+        }
+
+        // @media (max-width: 400px) {
+        //   width: 30%;
+        // }
+
         height: 24px;
         flex: 0 1 auto;
         // min-width: 125px;
         // width: 215px;
-        width: 30%;
+        width: 50%;
         position: relative;
 
         .input-clear-icon {
@@ -259,6 +271,14 @@ nav {
         }
 
         .global-search {
+          @media (max-width: 640px) {
+            left: 0;
+            top: 37px;
+            width: 100%;
+            /* right: 0; */
+            position: fixed;
+          }
+
           height: 150px;
           position: relative;
           margin-top: 17px;
@@ -700,14 +720,14 @@ nav {
         .post-article {
           padding: 0;
 
-          @media (min-width: 640px) {
-            margin-bottom: 60px;
-            border-radius: 3px;
-            border: 1px solid var(--border-color);
-            background-color: #fff;
-            margin-left: -1px;
-            margin-right: -1px;
-          }
+          // @media (min-width: 640px) {
+          // }
+          margin-bottom: 60px;
+          border-radius: 3px;
+          border: 1px solid var(--border-color);
+          background-color: #fff;
+          margin-left: -1px;
+          margin-right: -1px;
         }
 
         .post-header {

@@ -160,7 +160,7 @@ function Navbar(props) {
                         global={true}
                         fullName={user?.fullName}
                         userName={user?.userName}
-                        profileImage={profileImage}
+                        profileImage={user?.profileImage?.url}
                       />
                     ))}
                   </div>

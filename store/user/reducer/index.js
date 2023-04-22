@@ -22,6 +22,7 @@ const initialState = {
     followers: [],
     isLoading: false,
   },
+  isUpdating: false,
   socialLoader: false,
   isImageProcessing: false,
 };
@@ -138,6 +139,16 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         socialLoader: false,
+      };
+    case actionTypes.USER_UPDATE_START:
+      return {
+        ...state,
+        isUpdating: true,
+      };
+    case actionTypes.USER_STATE_UPDATE:
+      return {
+        ...state,
+        isUpdating: action.isUpdating,
       };
     default:
       return state;

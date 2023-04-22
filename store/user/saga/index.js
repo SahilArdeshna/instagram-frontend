@@ -4,6 +4,7 @@ import * as actionTypes from "../actions/actionTypes";
 import {
   fetchUserSaga,
   userFollowSaga,
+  updateUserSaga,
   socialStatsSaga,
   userUnfollowSaga,
   searchUserGlobalSaga,
@@ -16,6 +17,7 @@ export function* watchUser() {
   yield all([
     // takeEvery call every functions that matches
     takeEvery(actionTypes.USER_FETCH, fetchUserSaga),
+    takeEvery(actionTypes.USER_UPDATE, updateUserSaga),
     takeEvery(actionTypes.USER_FOLLOW, userFollowSaga),
     takeEvery(actionTypes.USER_UNFOLLOW, userUnfollowSaga),
     takeEvery(actionTypes.USER_SEARCH, searchUserGlobalSaga),

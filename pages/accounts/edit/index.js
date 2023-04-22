@@ -21,20 +21,12 @@ const EditProfile = (props) => {
     isAuth,
     loading,
     openModal,
+    updateUser,
+    isUpdating,
     uploadProfile,
     isUploadProfile,
     isImageProcessing,
   } = props;
-
-  if (!isAuth) {
-    push("/accounts/login");
-    return <Loading />;
-  }
-
-  let profileImage = "/user-img.jpg";
-  if (user?.profileImage?.url) {
-    profileImage = user.profileImage.url;
-  }
 
   const buttonClickHandler = useCallback(() => {
     if (user?.profileImage?.url) {
@@ -44,6 +36,11 @@ const EditProfile = (props) => {
 
     inputRef.current.click();
   }, [user]);
+
+  let profileImage = "/user-img.jpg";
+  if (user?.profileImage?.url) {
+    profileImage = user.profileImage.url;
+  }
 
   const fileChangeHandler = (e) => {
     const file = e.target?.files[0];
@@ -60,13 +57,7 @@ const EditProfile = (props) => {
     inputRef.current.value = "";
   };
 
-  const onSubmit = async (values) => {
-    try {
-      console.log("values", values);
-    } catch (err) {
-      console.log("err", err);
-    }
-  };
+  const onSubmit = (values) => updateUser(values);
 
   if (error && error.statusCode === 401) {
     // Logout from web-app
@@ -76,15 +67,20 @@ const EditProfile = (props) => {
     replace("/accounts/login");
   }
 
-  if (loading || !isReady) {
-    return <Loading />;
-  }
-
   useEffect(() => {
     if (!isUploadProfile) return;
 
     inputRef.current.click();
   }, [isUploadProfile]);
+
+  if (!isAuth) {
+    push("/accounts/login");
+    return <Loading />;
+  }
+
+  if (loading || !isReady) {
+    return <Loading />;
+  }
 
   return (
     <HomeLayout>
@@ -135,7 +131,11 @@ const EditProfile = (props) => {
                     <label>Username</label>
                   </div>
                   <div className="input-div">
-                    <FormInput name="userName" placeholder="Username" />
+                    <FormInput
+                      disabled
+                      name="userName"
+                      placeholder="Username"
+                    />
                   </div>
                 </div>
                 <div className="form-div">
@@ -176,7 +176,10 @@ const EditProfile = (props) => {
                     <label></label>
                   </div>
                   <div className="button-div">
-                    <button type="submit" disabled={submitting || pristine}>
+                    <button
+                      type="submit"
+                      disabled={submitting || pristine || isUpdating}
+                    >
                       Submit
                     </button>
                   </div>
@@ -196,6 +199,7 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
     isAuth: state.auth.isAuth,
     loading: state.auth.loading,
+    isUpdating: state.user.isUpdating,
     isImageProcessing: state.user.isImageProcessing,
     isUploadProfile: state.modal.profileUploadModal.uploadProfile,
   };
@@ -207,6 +211,7 @@ const mapDispatchToProps = (dispatch) => {
     openModal: () => dispatch(modalActions.openProfileUploadModal()),
     uploadProfile: (payload, userId) =>
       dispatch(userActions.userProfileImageUpload(payload, userId)),
+    updateUser: (payload) => dispatch(userActions.updateUser(payload)),
   };
 };
 

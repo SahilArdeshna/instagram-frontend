@@ -121,3 +121,11 @@ export const socialStats = (userId, type) => {
     actionType: type,
   };
 };
+
+// User update
+export const updateUser = (payload) => {
+  return {
+    type: actionTypes.USER_UPDATE,
+    payload,
+  };
+};

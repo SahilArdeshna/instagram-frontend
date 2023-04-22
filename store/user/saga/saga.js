@@ -13,6 +13,7 @@ import {
   getUser,
   unfollow,
   searchUser,
+  updateUser,
   socialStats,
   fetchUserData,
   uploadProfileImage,
@@ -261,5 +262,35 @@ export function* socialStatsSaga(action) {
     notify("error", err?.response?.data?.message);
 
     yield put({ type: modalActionTypes.MODAL_SOCIAL_STATS_FAILD });
+  }
+}
+
+// Update user saga
+export function* updateUserSaga(action) {
+  try {
+    // Show loader
+    yield put({ type: userActionTypes.USER_UPDATE_START });
+
+    // Call update user stats axios function
+    const result = yield updateUser(action.payload);
+
+    // If response error found throw error
+    if (result.data && result.data.statusCode === 400) {
+      throw new Error(result.data.message);
+    }
+
+    yield put({ type: authActionTypes.AUTH_USER_FETCH });
+
+    // Toster notification
+    notify("success", "Profile updated successfully!");
+
+    yield put({ type: userActionTypes.USER_STATE_UPDATE, isUpdating: false });
+  } catch (err) {
+    console.log(err);
+
+    // Toster notification
+    notify("error", err?.response?.data?.message);
+
+    yield put({ type: userActionTypes.USER_STATE_UPDATE, isUpdating: false });
   }
 }

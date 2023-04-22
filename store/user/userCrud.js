@@ -51,3 +51,8 @@ export const me = async () => {
 export const socialStats = async (userId, type) => {
   return await axios.get(`${USER_URL}/${userId}/social-stats?type=${type}`);
 };
+
+// Update user
+export const updateUser = async (payload) => {
+  return await axios.put(`${USER_URL}/update`, payload);
+};

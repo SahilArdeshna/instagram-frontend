@@ -4,6 +4,7 @@ export {
   userInit,
   userFaild,
   userStart,
+  updateUser,
   userSuccess,
   socialStats,
   fetchUserData,

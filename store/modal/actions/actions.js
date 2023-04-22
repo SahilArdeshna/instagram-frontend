@@ -110,3 +110,25 @@ export const closeSocialStatsModal = () => {
     type: actionTypes.MODAL_SOCIAL_STATS_CLOSE,
   };
 };
+
+// Profile upload modal open
+export const openProfileUploadModal = () => {
+  return {
+    type: actionTypes.MODAL_PROFILE_UPLOAD_OPEN,
+  };
+};
+
+// Profile upload modal close
+export const closeProfileUploadModal = () => {
+  return {
+    type: actionTypes.MODAL_PROFILE_UPLOAD_CLOSE,
+  };
+};
+
+// Profile upload modal close
+export const updateProfileUploadState = (profileUpload) => {
+  return {
+    type: actionTypes.MODAL_PROFILE_UPLOAD_UPDATE,
+    profileUpload,
+  };
+};

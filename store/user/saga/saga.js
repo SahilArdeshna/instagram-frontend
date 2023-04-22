@@ -177,6 +177,12 @@ export function* deleteProfileImageSaga(action) {
       throw new Error(result.data.message);
     }
 
+    // Get user's updated data
+    const { data } = yield getUser(action.userId);
+
+    // Update auth user's data
+    yield put(authActions.updateAuthUser(data));
+
     // Toster notification
     notify("success", "Profile image removed successfully!");
 

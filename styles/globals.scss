@@ -16,6 +16,7 @@
   --secondary-button-hover: rgb(219, 219, 219);
   --primary-button: rgb(0, 149, 246);
   --primary-button-hover: rgb(24, 119, 242);
+  --error-or-distructive: rgb(237, 73, 86);
 }
 
 html,
@@ -1197,13 +1198,22 @@ hr {
           margin-bottom: 10px;
         }
 
-        button {
-          border: 0;
-          cursor: pointer;
-          height: 100%;
-          padding: 0;
-          width: 100%;
-          margin: 0;
+        .image-with-loader {
+          width: inherit;
+          height: inherit;
+
+          button {
+            border: 0;
+            cursor: pointer;
+            height: 100%;
+            padding: 0;
+            width: 100%;
+            margin: 0;
+          }
+
+          .profile-loader {
+            align-items: center;
+          }
         }
 
         form {
@@ -2117,6 +2127,10 @@ hr {
           height: 38px;
           border-radius: 50%;
         }
+
+        .profile-loader {
+          align-items: center;
+        }
       }
 
       input {
@@ -2379,4 +2393,34 @@ hr {
   padding-left: 4px;
   line-height: 14px;
   color: var(--color-8e8e8e);
+}
+
+.profile-upload-modal {
+  .change-profile-photo {
+    line-height: 25px;
+    margin: 20px 16px 10px;
+    font-size: 20px !important;
+  }
+
+  .remove-photo {
+    cursor: pointer;
+    line-height: 25px;
+    font-weight: 700;
+    color: var(--error-or-distructive);
+    background-color: transparent;
+  }
+
+  .upload-photo {
+    cursor: pointer;
+    line-height: 25px;
+    font-weight: 700;
+    color: var(--primary-button);
+    background-color: transparent;
+  }
+
+  .cancel {
+    cursor: pointer;
+    line-height: 25px;
+    background-color: transparent;
+  }
 }

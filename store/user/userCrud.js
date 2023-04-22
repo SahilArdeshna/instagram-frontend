@@ -27,7 +27,7 @@ export const uploadProfileImage = async (payload) => {
 
 // Delete profile image
 export const deleteProfileImage = async () => {
-  return await axios.delete(`${USER_URL}/delete`);
+  return await axios.post(`${USER_URL}/deleteImage`);
 };
 
 // Get user data

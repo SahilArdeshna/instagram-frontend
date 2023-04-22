@@ -33,6 +33,10 @@ const initialState = {
     actionType: "",
     isLoading: false,
   },
+  profileUploadModal: {
+    show: false,
+    uploadProfile: false,
+  },
 };
 
 // Reducer function
@@ -172,6 +176,30 @@ export const modalReducer = (state = initialState, action) => {
         socialStats: {
           ...state.socialStats,
           isLoading: false,
+        },
+      };
+    case actionTypes.MODAL_PROFILE_UPLOAD_OPEN:
+      return {
+        ...state,
+        profileUploadModal: {
+          show: true,
+          uploadProfile: false,
+        },
+      };
+    case actionTypes.MODAL_PROFILE_UPLOAD_CLOSE:
+      return {
+        ...state,
+        profileUploadModal: {
+          show: false,
+          uploadProfile: false,
+        },
+      };
+    case actionTypes.MODAL_PROFILE_UPLOAD_UPDATE:
+      return {
+        ...state,
+        profileUploadModal: {
+          ...state.profileUploadModal,
+          uploadProfile: action.profileUpload,
         },
       };
     default:

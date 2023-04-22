@@ -1,8 +1,7 @@
-import { isEmpty } from "lodash";
 import { connect } from "react-redux";
-import { useMemo, useRef } from "react";
 import { Form } from "react-final-form";
 import { useRouter } from "next/router";
+import { useCallback, useEffect, useRef } from "react";
 
 import Loader from "../../../icons/Loader";
 import Loading from "../../../components/loading";
@@ -11,6 +10,7 @@ import FormInput from "../../../components/Form/Input";
 import HomeLayout from "../../../components/layout/Home";
 import { profileSchema } from "../../../validation/schema";
 import * as userActions from "../../../store/user/actions";
+import * as modalActions from "../../../store/modal/actions";
 
 const EditProfile = (props) => {
   const inputRef = useRef(null);
@@ -20,8 +20,9 @@ const EditProfile = (props) => {
     error,
     isAuth,
     loading,
+    openModal,
     uploadProfile,
-    removeProfile,
+    isUploadProfile,
     isImageProcessing,
   } = props;
 
@@ -35,12 +36,16 @@ const EditProfile = (props) => {
     profileImage = user.profileImage.url;
   }
 
-  const buttonClickHandler = () => {
+  const buttonClickHandler = useCallback(() => {
+    if (user?.profileImage?.url) {
+      openModal();
+      return;
+    }
+
     inputRef.current.click();
-  };
+  }, [user]);
 
   const fileChangeHandler = (e) => {
-    console.log(e.target.files);
     const file = e.target?.files[0];
 
     if (!file) {
@@ -74,6 +79,12 @@ const EditProfile = (props) => {
   if (loading || !isReady) {
     return <Loading />;
   }
+
+  useEffect(() => {
+    if (!isUploadProfile) return;
+
+    inputRef.current.click();
+  }, [isUploadProfile]);
 
   return (
     <HomeLayout>
@@ -116,7 +127,7 @@ const EditProfile = (props) => {
                     <label>Name</label>
                   </div>
                   <div className="input-div">
-                    <FormInput name="fullName" placeHolder="Name" />
+                    <FormInput name="fullName" placeholder="Name" />
                   </div>
                 </div>
                 <div className="form-div">
@@ -124,7 +135,7 @@ const EditProfile = (props) => {
                     <label>Username</label>
                   </div>
                   <div className="input-div">
-                    <FormInput name="userName" placeHolder="Username" />
+                    <FormInput name="userName" placeholder="Username" />
                   </div>
                 </div>
                 <div className="form-div">
@@ -132,7 +143,7 @@ const EditProfile = (props) => {
                     <label>Website</label>
                   </div>
                   <div className="input-div">
-                    <FormInput name="website" placeHolder="Website" />
+                    <FormInput name="website" placeholder="Website" />
                   </div>
                 </div>
                 <div className="form-div">
@@ -144,7 +155,7 @@ const EditProfile = (props) => {
                       as="textarea"
                       rows={3}
                       name="bio"
-                      placeHolder=""
+                      placeholder=""
                     />
                   </div>
                 </div>
@@ -156,7 +167,7 @@ const EditProfile = (props) => {
                     <FormInput
                       disabled
                       name="email"
-                      placeHolder="Email address"
+                      placeholder="Email address"
                     />
                   </div>
                 </div>
@@ -186,13 +197,14 @@ const mapStateToProps = (state) => {
     isAuth: state.auth.isAuth,
     loading: state.auth.loading,
     isImageProcessing: state.user.isImageProcessing,
+    isUploadProfile: state.modal.profileUploadModal.uploadProfile,
   };
 };
 
 // Map dispatch to props
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeProfile: () => dispatch(userActions.userProfileImageDelete()),
+    openModal: () => dispatch(modalActions.openProfileUploadModal()),
     uploadProfile: (payload, userId) =>
       dispatch(userActions.userProfileImageUpload(payload, userId)),
   };

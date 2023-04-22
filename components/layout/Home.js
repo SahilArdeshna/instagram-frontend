@@ -7,6 +7,7 @@ import ActionModal from "../modal/Action";
 import PostUpload from "../modal/PostUpload";
 import SocialModal from "../modal/SocialModal";
 import DiscardModal from "../modal/DiscardModal";
+import ProfileUpload from "../modal/ProfileUpload";
 import DeleteAndUnfollow from "../modal/DeleteAndUnfollow";
 
 function HomeLayout(props) {
@@ -75,6 +76,9 @@ function HomeLayout(props) {
 
       {/* social stats modal */}
       <SocialModal />
+
+      {/* profile upload modal */}
+      <ProfileUpload />
     </section>
   );
 }

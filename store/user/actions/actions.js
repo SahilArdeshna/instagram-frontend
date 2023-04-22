@@ -75,9 +75,10 @@ export const userProfileImageUpload = (payload, userId) => {
 };
 
 // Delete profile image
-export const userProfileImageDelete = () => {
+export const userProfileImageDelete = (userId) => {
   return {
     type: actionTypes.USER_PROFILE_IMAGE_DELETE,
+    userId,
   };
 };
 

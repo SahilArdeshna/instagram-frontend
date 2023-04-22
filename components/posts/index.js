@@ -78,7 +78,7 @@ function Posts(props) {
                 showIndicators={false}
               >
                 {post.images.map((image) => (
-                  <div>
+                  <div key={image.key}>
                     <img alt={image.key} src={image.url} />
                   </div>
                 ))}

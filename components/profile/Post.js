@@ -3,8 +3,6 @@ import Link from "next/link";
 function PostsContainer(props) {
   const { posts } = props;
 
-  //   if (!posts) return;
-
   return (
     <div className="posts-container">
       {posts?.map((post) => (

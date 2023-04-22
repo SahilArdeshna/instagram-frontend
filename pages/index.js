@@ -41,18 +41,16 @@ function Home(props) {
   }
 
   return (
-    <>
-      <HomeLayout>
-        <main className="home-main">
-          <section className="home-section">
-            <div className="post-container">
-              <Posts posts={posts} />
-            </div>
-            <SideContainer user={user} />
-          </section>
-        </main>
-      </HomeLayout>
-    </>
+    <HomeLayout>
+      <main className="home-main">
+        <section className="home-section">
+          <div className="post-container">
+            <Posts posts={posts} />
+          </div>
+          <SideContainer user={user} />
+        </section>
+      </main>
+    </HomeLayout>
   );
 }
 
